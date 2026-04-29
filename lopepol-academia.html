@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lopepol · Academia de Lengua</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1208;
+  --paper: #faf7f0;
+  --cream: #f2ead8;
+  --gold: #c8960c;
+  --gold-light: #e8b84b;
+  --red: #c0392b;
+  --green: #1e6e45;
+  --blue: #1a4a7a;
+  --border: #d4c9a8;
+  --shadow: rgba(26,18,8,0.12);
+  --tab-h: 60px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 32px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px var(--shadow);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.header-logos {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-img-lopepol {
+  height: 44px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  object-fit: contain;
+}
+
+.logo-img-lope {
+  height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--gold-light);
+}
+
+.logo-sub {
+  font-size: 10px;
+  font-weight: 300;
+  color: #9e9280;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.tab {
+  padding: 10px 28px;
+  border: none;
+  background: transparent;
+  color: #9e9280;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.tab:hover { color: var(--gold-light); background: rgba(255,255,255,0.05); }
+
+.tab.active {
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.tab .tab-icon { margin-right: 6px; }
+
+/* MAIN */
+main { max-width: 960px; margin: 0 auto; padding: 36px 24px 80px; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* SECTION HEADINGS */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: #7a6e5a;
+  margin-bottom: 32px;
+  letter-spacing: 0.3px;
+}
+
+/* CONTENT CARDS */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.card-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.card-header:hover { background: #2d2418; }
+
+.card-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  flex: 1;
+}
+
+.card-header .number {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.card-chevron {
+  font-size: 12px;
+  transition: transform 0.3s;
+  color: #9e9280;
+}
+
+.card.open .card-chevron { transform: rotate(180deg); }
+
+.card-body {
+  padding: 20px 22px;
+  display: none;
+  border-top: 1px solid var(--border);
+}
+
+.card.open .card-body { display: block; }
+
+/* RULE ITEMS */
+.rule-group { margin-bottom: 20px; }
+
+.rule-group h4 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.rule-item {
+  padding: 8px 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  border-bottom: 1px solid #f0ebe0;
+  display: flex;
+  gap: 10px;
+}
+
+.rule-item:last-child { border-bottom: none; }
+
+.rule-bullet {
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.rule-text strong { color: var(--blue); }
+.rule-text em { color: var(--green); font-style: normal; font-weight: 500; }
+
+/* EXAMPLES */
+.example-box {
+  background: var(--cream);
+  border-left: 3px solid var(--gold);
+  padding: 10px 14px;
+  margin: 8px 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.example-box .ex-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.correct { color: var(--green); font-weight: 600; }
+.wrong { color: var(--red); text-decoration: line-through; }
+
+/* ATENCIÓN BOX */
+.attention-box {
+  background: #fff8e6;
+  border: 1px solid #f0d060;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.attention-box::before {
+  content: "⚠ ATENCIÓN";
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #a07010;
+  margin-bottom: 6px;
+}
+
+/* TABLE */
+.rule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13.5px;
+}
+
+.rule-table th {
+  background: var(--ink);
+  color: var(--gold-light);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.rule-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.rule-table tr:nth-child(even) td { background: var(--cream); }
+
+/* TILDE TABLE */
+.tilde-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+.tilde-table th { background: var(--blue); color: white; padding: 7px 10px; font-size: 12px; }
+.tilde-table td { padding: 7px 10px; border-bottom: 1px solid #e8e0d0; vertical-align: top; line-height: 1.5; }
+.tilde-table tr:nth-child(even) td { background: #f5f0e8; }
+.tilde-tilde { font-family: 'DM Mono', monospace; font-weight: 700; color: var(--red); font-size: 15px; }
+.tilde-plain { font-family: 'DM Mono', monospace; color: #666; }
+
+/* === TEST PANEL === */
+#panel-test { max-width: 720px; margin: 0 auto; }
+
+.test-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.mode-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.mode-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow); }
+.mode-card.selected { border-color: var(--gold); background: #fffbf0; }
+
+.mode-icon { font-size: 36px; margin-bottom: 10px; }
+.mode-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.mode-desc { font-size: 13px; color: #7a6e5a; line-height: 1.5; }
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 14px 36px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover { background: var(--gold); color: var(--ink); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--border);
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover { border-color: var(--ink); }
+
+/* QUESTION */
+.question-area { display: none; }
+.question-area.visible { display: block; }
+
+.progress-bar {
+  background: var(--cream);
+  border-radius: 20px;
+  height: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 20px;
+  transition: width 0.5s ease;
+}
+
+.question-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.question-badge {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--gold-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.question-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: #7a6e5a;
+}
+
+.timer-display {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--cream);
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.timer-display.urgent { color: var(--red); animation: pulse 1s infinite; }
+
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.question-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+
+.question-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.tag-ortografia { background: #e8f4ff; color: var(--blue); border: 1px solid #b8d8f8; }
+.tag-gramatica { background: #e8fff0; color: var(--green); border: 1px solid #b8e8c8; }
+.tag-oficial { background: #fff8e0; color: #8a6000; border: 1px solid #f0d060; }
+
+.question-text {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 22px;
+  color: var(--ink);
+}
+
+.options { display: flex; flex-direction: column; gap: 10px; }
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  line-height: 1.5;
+  background: white;
+  text-align: left;
+}
+
+.option:hover:not(.disabled) { border-color: var(--gold); background: #fffbf0; }
+
+.option.selected { border-color: var(--blue); background: #f0f4ff; }
+
+.option.correct {
+  border-color: var(--green);
+  background: #f0fff5;
+  color: var(--green);
+}
+
+.option.wrong {
+  border-color: var(--red);
+  background: #fff0f0;
+  color: var(--red);
+  text-decoration: line-through;
+}
+
+.option.disabled { cursor: default; }
+
+.option-letter {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.option.correct .option-letter { background: var(--green); color: white; }
+.option.wrong .option-letter { background: var(--red); color: white; }
+
+.explanation-box {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  display: none;
+}
+
+.explanation-box.visible { display: block; }
+
+.explanation-box strong { color: var(--gold); }
+
+.question-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* RESULT */
+.result-screen {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.result-screen.visible { display: block; }
+
+.result-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.result-score .score-total { font-size: 36px; color: #9e9280; vertical-align: super; }
+
+.result-label {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.result-desc {
+  font-size: 15px;
+  color: #7a6e5a;
+  margin-bottom: 32px;
+}
+
+.result-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.breakdown-item { text-align: center; }
+.breakdown-num { font-size: 32px; font-weight: 700; font-family: 'Playfair Display', serif; }
+.breakdown-label { font-size: 12px; color: #7a6e5a; text-transform: uppercase; letter-spacing: 1px; }
+.breakdown-correct .breakdown-num { color: var(--green); }
+.breakdown-wrong .breakdown-num { color: var(--red); }
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+.filter-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+
+.stats-bar {
+  display: flex;
+  gap: 16px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.stat { text-align: center; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; }
+.stat-label { font-size: 11px; color: #9e9280; text-transform: uppercase; letter-spacing: 0.8px; }
+.stat-divider { width: 1px; background: var(--border); height: 36px; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .site-header { padding: 14px 16px 0; }
+  .logo { font-size: 22px; }
+  .tab { padding: 9px 14px; font-size: 13px; }
+  main { padding: 20px 14px 60px; }
+  .test-modes { grid-template-columns: 1fr; }
+  .section-title { font-size: 26px; }
+  .result-score { font-size: 60px; }
+}
+</style>
+</head>
+<style>
+/* LOGIN SCREEN */
+#login-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  flex-direction: column;
+  gap: 0;
+}
+
+.login-box {
+  background: #221c10;
+  border: 1px solid #3a3020;
+  border-radius: 16px;
+  padding: 48px 44px 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.login-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.login-logo-lopepol {
+  height: 52px;
+  filter: brightness(0) invert(1);
+}
+
+.login-logo-lope {
+  height: 44px;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.login-divider-v {
+  width: 1px;
+  height: 44px;
+  background: #3a3020;
+}
+
+.login-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.login-subtitle {
+  font-size: 12px;
+  color: #6a6050;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.login-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #9e9280;
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: #1a1208;
+  border: 1.5px solid #3a3020;
+  border-radius: 8px;
+  color: var(--paper);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  border-color: var(--gold);
+}
+
+.login-input.error {
+  border-color: var(--red);
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+.login-error {
+  font-size: 13px;
+  color: var(--red);
+  margin-bottom: 16px;
+  min-height: 18px;
+  text-align: left;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+
+.login-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.login-footer {
+  font-size: 11px;
+  color: #4a4030;
+  margin-top: 20px;
+  letter-spacing: 0.5px;
+}
+
+#app-content {
+  display: none;
+}
+</style>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logos">
+      <img class="login-logo-lopepol" src="logo-lopepol.jpg" alt="Lopepol">
+      <div class="login-divider-v"></div>
+      <img class="login-logo-lope" src="logo-lope.webp" alt="Lope de Vega">
+    </div>
+    <div class="login-title">Academia Lopepol</div>
+    <div class="login-subtitle">Policía Nacional · Escala Básica</div>
+    <label class="login-label" for="pwd-input">Contraseña de acceso</label>
+    <input
+      class="login-input"
+      type="password"
+      id="pwd-input"
+      placeholder="••••••••"
+      autocomplete="current-password"
+      onkeydown="if(event.key==='Enter') checkPassword()"
+    >
+    <div class="login-error" id="login-error"></div>
+    <button class="login-btn" onclick="checkPassword()">Entrar →</button>
+    <div class="login-footer">Acceso restringido a alumnos matriculados</div>
+  </div>
+</div>
+
+<div id="app-content">
+
+<header class="site-header">
+  <div class="header-top">
+    <div class="header-logos">
+      <img class="logo-img-lopepol" src="logo-lopepol.jpg" alt="Lopepol">
+    </div>
+    <div class="header-center">
+      <span class="logo">Academia de Lengua</span>
+      <span class="logo-sub">Oposiciones · Policía Nacional</span>
+    </div>
+    <div class="header-logos">
+      <img class="logo-img-lope" src="logo-lope.webp" alt="Lope de Vega">
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('ortografia')" id="tab-ortografia">
+      <span class="tab-icon">✍️</span> Ortografía
+    </button>
+    <button class="tab" onclick="switchTab('gramatica')" id="tab-gramatica">
+      <span class="tab-icon">📖</span> Gramática
+    </button>
+    <button class="tab" onclick="switchTab('test')" id="tab-test">
+      <span class="tab-icon">🎯</span> Test
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== GRAMÁTICA ===== -->
+<div class="panel" id="panel-gramatica">
+  <p class="section-title">Tema 37 · Gramática</p>
+  <p class="section-subtitle">Morfología y Sintaxis de la Lengua Española</p>
+
+  <!-- MORFOLOGÍA -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">1</span>
+      <h3>Morfología: Sufijos y Prefijos</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Sufijos más comunes</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Para sustantivos: <strong>-ancia, -dad, -eza, -aje</strong> (importancia, lealtad, belleza, viaje)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Para adjetivos: <strong>-iente, -ano, -és</strong> (conveniente, urbano, cortés)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Para verbos: <strong>-ear, -ificar, -izar</strong> (patear, clarificar, realizar)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">2</span>
+      <h3>El Sustantivo</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Género</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">En español solo existen dos géneros: <strong>masculino y femenino</strong> (no existe el neutro).</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Sustantivos epicenos:</strong> tienen un solo género gramatical para ambos sexos: <em>víctima, personaje, criatura</em>.</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Son masculinos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Los días, meses, años, <strong>metales, idiomas, colores, vinos</strong> y números.</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Son femeninos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Las <strong>letras del alfabeto</strong> y las <strong>horas</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">3</span>
+      <h3>Pronombres Personales</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="rule-table">
+        <tr><th>Persona</th><th>Singular</th><th>Plural</th></tr>
+        <tr><td>1ª</td><td>yo</td><td>nosotros/as</td></tr>
+        <tr><td>2ª</td><td>tú</td><td>vosotros/as</td></tr>
+        <tr><td>3ª</td><td>él, ella</td><td>ellos, ellas</td></tr>
+      </table>
+      <div class="rule-group">
+        <h4>Casos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Nominativo:</strong> yo, tú, él... (función de sujeto)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Acusativo (CD):</strong> me, te, lo/la, nos, os, los/las</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Dativo (CI):</strong> me, te, le, nos, os, les</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Preposicional:</strong> mí, ti, él/ella, nosotros, vosotros, ellos</div></div>
+      </div>
+      <div class="attention-box">Leísmo: usar «le» como CD de persona masculina es tolerado en España, pero usar «le» para CD femenino («la conminé», no «le conminé») siempre es INCORRECTO. Verbos transitivos como «conminar» rigen CD → la/lo.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">4</span>
+      <h3>El Adjetivo</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Tipos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Calificativos:</strong> admiten cualquier posición en la oración.</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Determinativos:</strong> deben anteponerse al nombre (cinco, alguna, muchos).</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Grados del adjetivo</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Positivo:</strong> alto, grande</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Comparativo:</strong> más alto que / tan alto como / menos alto que</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Comparativos sintéticos irregulares:</strong> mayor, menor, mejor, peor, superior, inferior. <span style="color:var(--red)">NUNCA «más mayor», «más mejor», «más peor».</span></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Superlativo relativo:</strong> el más alto de / el menos alto de</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Elativos:</strong> expresan grado extremo absoluto: -ísimo, -érrimo, re-, super-, hiper-</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Formas apocopadas</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>buen / mal</strong> ante sustantivo masculino singular: buen chico, mal tiempo</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>gran</strong> ante sustantivo singular de cualquier género: gran hombre, gran mujer</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>san</strong> ante nombre propio (excepto Santo Tomás, Santo Domingo): san Juan, san Pablo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">5</span>
+      <h3>El Adverbio</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Palabra <strong>invariable</strong> que modifica verbos, adjetivos y otros adverbios.</div></div>
+      <div class="rule-group" style="margin-top:14px;">
+        <h4>Clasificación por significado</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Tiempo: <em>hoy, ayer, mañana, ya, siempre</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Lugar: <em>aquí, allí, cerca, lejos, dentro</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Modo: <em>bien, mal, despacio, así</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Cantidad: <em>mucho, poco, bastante, demasiado</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Afirmación: <em>sí, también, ciertamente</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Negación: <em>no, nunca, jamás, tampoco</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Duda: <em>quizás, acaso, tal vez</em></div></div>
+      </div>
+      <div class="example-box">
+        <div class="ex-label">Locuciones adverbiales destacadas</div>
+        <em>de repente, sin duda, a menudo, grosso modo, en absoluto</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">6</span>
+      <h3>El Verbo</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Modos verbales</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Indicativo:</strong> expresa realidad (como hecho cierto)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Subjuntivo:</strong> expresa virtualidad, deseo, duda, posibilidad</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Imperativo:</strong> expresa mandato o ruego directo</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Tiempos de subjuntivo — ¡Examen frecuente!</h4>
+        <table class="rule-table">
+          <tr><th>Tiempo</th><th>Forma</th><th>Ejemplo</th></tr>
+          <tr><td>Presente</td><td>hable / coma</td><td>Espero que hable</td></tr>
+          <tr><td><strong>Pretérito perfecto</strong></td><td><strong>haya + participio</strong></td><td><strong>Espero que haya hablado</strong></td></tr>
+          <tr><td>Pretérito imperfecto</td><td>hablara/hablase</td><td>Quería que hablara</td></tr>
+          <tr><td>Pluscuamperfecto</td><td>hubiera/hubiese + part.</td><td>Si hubiera hablado</td></tr>
+          <tr><td>Futuro imperfecto</td><td>hablare</td><td>Si hablare (raro)</td></tr>
+          <tr><td>Futuro perfecto</td><td>hubiere + part.</td><td>Si hubiere hablado</td></tr>
+        </table>
+        <div class="attention-box">CONFUSIÓN HABITUAL: «Haya investigado» = pret. perfecto subj. | «Hubiera/hubiese investigado» = pluscuamperfecto subj. | «Hubiere investigado» = futuro perfecto subj.</div>
+      </div>
+      <div class="rule-group">
+        <h4>Tipos de verbos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Incoativo:</strong> indica el <em>comienzo</em> de una acción (florecer, amanecer, enrojecer)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Iterativo:</strong> expresa una acción repetida (golpetear, tartamudear)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Transitivo:</strong> admite complemento directo</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Intransitivo:</strong> no admite complemento directo (nacer, morir, salir)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Impersonal:</strong> sin sujeto (llover, nevar, haber existencial)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Copulativo:</strong> une sujeto con atributo (ser, estar, parecer)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Defectivo:</strong> solo se conjuga en algunas formas (abolir, balbucir)</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Formas no personales</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Infinitivo:</strong> forma base (hablar, comer, vivir)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Gerundio:</strong> acción en desarrollo (hablando, comiendo)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Participio:</strong> forma adjetival (hablado, comido)</div></div>
+      </div>
+      <div class="attention-box">HABER IMPERSONAL: siempre en singular. «Había muchas personas» (correcto) / «<s>Habían</s> muchas personas» (incorrecto). «Habrá salidas» / «<s>Habrán</s> salidas» (incorrecto).</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">7</span>
+      <h3>Preposiciones y Conjunciones</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Preposiciones (todas)</h4>
+        <div class="example-box">
+          a · ante · bajo · cabe · con · contra · de · desde · durante · en · entre · hacia · hasta · mediante · para · por · según · sin · so · sobre · tras · versus · vía
+        </div>
+      </div>
+      <div class="rule-group">
+        <h4>Conjunciones</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Copulativas:</strong> <em>y</em> (→ <em>e</em> ante /i/), <em>ni</em>. Ej.: <em>ciencia e historia</em>; pero <em>agua y hielo</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Disyuntivas:</strong> <em>o</em> (→ <em>u</em> ante /o/). Ej.: <em>7 u 8</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Adversativas:</strong> <em>pero, sino, mas</em> (sin tilde = conjunción)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">8</span>
+      <h3>Sintaxis: La Oración</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Tipos por modalidad</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Declarativas, interrogativas, exclamativas, imperativas</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Funciones sintácticas</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Sujeto:</strong> concuerda en número y persona con el verbo. Puede ser tácito.</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>CD (Complemento Directo):</strong> sustituible por <em>lo/la/los/las</em>.</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>CI (Complemento Indirecto):</strong> sustituible por <em>le/les</em>.</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Complemento de régimen:</strong> exigido por el verbo con preposición fija (depender <em>de</em>, consistir <em>en</em>).</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>CC (Complemento Circunstancial):</strong> adjunto optativo de lugar, tiempo, modo, causa, finalidad...</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Atributo:</strong> con verbos copulativos (ser, estar, parecer).</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Complemento predicativo:</strong> complementa al verbo y al sujeto o CD simultáneamente.</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Oraciones por dependencia</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Simples:</strong> un solo predicado</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Subordinadas sustantivas:</strong> función nominal (sujeto, CD...)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Subordinadas adjetivas (relativas):</strong> modifican a un sustantivo</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Subordinadas adverbiales:</strong> causales, temporales, concesivas, condicionales...</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /panel-gramatica -->
+
+<!-- ===== ORTOGRAFÍA ===== -->
+<div class="panel active" id="panel-ortografia">
+  <p class="section-title">Tema 36 · Ortografía</p>
+  <p class="section-subtitle">Reglas ortográficas de la Lengua Española según la RAE (2010)</p>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">1</span>
+      <h3>Uso de B, V y W</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Se escribe M (no N) ante B y P</h4>
+        <div class="example-box"><em>campo, cambio, trombón, trompeta</em></div>
+      </div>
+      <div class="rule-group">
+        <h4>Se escriben con B</h4>
+        <div class="rule-item"><span class="rule-bullet">1</span><div class="rule-text">Adjetivos en <strong>-ble</strong> y <strong>-bundo</strong>: <em>habitable, vagabundo</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">2</span><div class="rule-text">Palabras que empiezan por <strong>bio-</strong> y <strong>biblio-</strong>: <em>biología, bibliografía</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">3</span><div class="rule-text">Grupos <strong>mb, bl, br</strong>: <em>cambio, poblado, brasero</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">4</span><div class="rule-text">Pretérito imperfecto de indicativo de la 1ª conjugación y el verbo <em>ir</em>: <em>amaba, iba</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">5</span><div class="rule-text">Verbos en <strong>-buir</strong> y <strong>-bir</strong> (excepto: hervir, servir, vivir): <em>contribuir, percibir, escribir</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">6</span><div class="rule-text">Verbos <strong>haber, deber, saber, caber</strong></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Se escriben con V</h4>
+        <div class="rule-item"><span class="rule-bullet">1</span><div class="rule-text">Adjetivos en <strong>-ívoro/a</strong>: <em>carnívoro</em>; y adjetivos llanos en <strong>-ave, -avo, -eve, -evo, -ivo</strong>: <em>grave, eslavo, leve, nuevo, esquivo</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">2</span><div class="rule-text">Palabras que empiezan por <strong>eva-, eve-, evi-, evo-</strong>: <em>evacuar, evento, evitar</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">3</span><div class="rule-text">Combinaciones <strong>bv, dv, nv</strong>: <em>subvención, adverbio, enviar</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">4</span><div class="rule-text">Pretérito perfecto simple de <strong>tener, estar, andar</strong>: <em>tuvimos, estuvieron, anduvieron</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">5</span><div class="rule-text">Formas del verbo <em>ir</em>: <em>vamos, voy, vaya</em>; e indefinidos en <strong>-uve, -uvo</strong>: <em>tuve, anduvo</em> (salvo <em>hubo</em>)</div></div>
+        <div class="rule-item"><span class="rule-bullet">6</span><div class="rule-text">Tras sílabas <strong>lla-, lle-, llo-, llu-</strong>: <em>llave, llevar, llover, lluvia</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">7</span><div class="rule-text">Tras la sílaba <strong>cla-</strong>: <em>clavel, clave, enclave</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Homófonas B/V frecuentes en examen</h4>
+        <table class="rule-table">
+          <tr><th>Con B</th><th>Con V</th></tr>
+          <tr><td>grabar (labrar relieves)</td><td>gravar (imponer impuestos)</td></tr>
+          <tr><td>sabia (persona que sabe)</td><td>savia (líquido de las plantas)</td></tr>
+          <tr><td>tubo (pieza cilíndrica)</td><td>tuvo (del verbo tener)</td></tr>
+        </table>
+      </div>
+      <div class="attention-box">Errores frecuentes: <em>deberes, iba, hubo, tuvo, verbo, adverbio, octavo</em></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">2</span>
+      <h3>Uso de C, Z, G, J y H</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>C y Z</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Z</strong> delante de a, o, u: <em>zapato, azotea, zumo</em>; terminación <strong>-azgo</strong>: <em>noviazgo</em>; aumentativos: <em>bocaza</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>C</strong> delante de e, i: <em>aceite, cigala</em>. La -z final pasa a -c en plural: <em>disfraz→disfraces, actriz→actrices</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>G y J</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>J</strong>: sílabas ja, jo, ju; verbos <em>tejer, crujir</em>; verbos en -jar, -jear; palabras en <strong>-aje, -eje, -jería</strong></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>G</strong>: sílabas ga, go, gu, gue, gui; verbos en <strong>-gerar, -ger, -gir</strong>; palabras con <strong>geo-, gest-, -logía, -gogía</strong></div></div>
+        <div class="attention-box"><em>Cónyuge</em> se escribe con G pero se pronuncia con J: [kónyuxe]. <em>Ingerir</em> (introducir en la boca) ≠ <em>injerir</em> (meter en otra cosa).</div>
+      </div>
+      <div class="rule-group">
+        <h4>H</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Ante diptongos con ua, ue, ui: <em>huevo, huerta, huir</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Ante ia, ie en posición inicial: <em>hiato, hielo, hiena</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Formantes griegos: helio-, hema-, hemi-, hetero-, hiper-, hipo-</div></div>
+        <div class="attention-box">
+          <strong>hecho</strong> (de hacer) ≠ <strong>echo</strong> (de echar)<br>
+          <strong>haber</strong> (verbo) / <strong>a ver</strong> (expresión)<br>
+          <strong>habría</strong> (haber) / <strong>abría</strong> (abrir)<br>
+          <strong>honda</strong> (tira de cuero) / <strong>onda</strong> (curva)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">3</span>
+      <h3>Uso de la Tilde — Reglas Generales</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Clasificación de palabras por acento</h4>
+        <table class="rule-table">
+          <tr><th>Tipo</th><th>Sílaba tónica</th><th>Lleva tilde cuando…</th><th>Ejemplos</th></tr>
+          <tr><td><strong>Aguda</strong></td><td>Última</td><td>Termina en vocal, -n o -s</td><td>alhelí, cinturón, compás</td></tr>
+          <tr><td><strong>Llana</strong></td><td>Penúltima</td><td>NO termina en vocal, -n o -s; o termina en grupo consonántico o -y</td><td>hábil, césped, bíceps, yóquey</td></tr>
+          <tr><td><strong>Esdrújula</strong></td><td>Antepenúltima</td><td>Siempre</td><td>sílaba, péndulo, cómpralo</td></tr>
+          <tr><td><strong>Sobreesdrújula</strong></td><td>Anterior a la antepenúltima</td><td>Siempre</td><td>remítemelo</td></tr>
+        </table>
+        <div class="attention-box"><strong>BÍCEPS</strong>: termina en -ps (no en -s simple), por tanto es llana que no termina en vocal/n/s → lleva tilde. «Bíceps» es obligatorio, no «biceps».</div>
+      </div>
+      <div class="rule-group">
+        <h4>Las mayúsculas SIEMPRE llevan tilde</h4>
+        <div class="example-box"><em>Ángel, Íñigo, EL ÁNGEL BLANCO</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">4</span>
+      <h3>Diptongos, Triptongos e Hiatos</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Diptongo</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Unión de dos vocales en una misma sílaba; al menos una debe ser débil (i, u).</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">La tilde recae sobre la <strong>vocal abierta</strong> (a,e,o): <em>bailéis, terapéutico</em>. Si ambas son cerradas, sobre la segunda: <em>cuídalo</em>.</div></div>
+        <div class="attention-box"><em>Guion, ion, hui, buey, fiais</em>: monosílabas a efectos ortográficos → sin tilde.</div>
+      </div>
+      <div class="rule-group">
+        <h4>Hiato: vocal cerrada tónica + vocal abierta</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Siempre llevan tilde</strong> (independientemente de las reglas generales): <em>actúe, porFÍe, evalúas, búho, país, maíz, reír</em></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">5</span>
+      <h3>Tilde Diacrítica</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="tilde-table">
+        <tr><th>Sin tilde</th><th>Con tilde</th><th>Diferencia</th></tr>
+        <tr><td><span class="tilde-plain">de</span> — preposición</td><td><span class="tilde-tilde">dé</span> — verbo dar</td><td>Dé recuerdos de mi parte</td></tr>
+        <tr><td><span class="tilde-plain">el</span> — artículo</td><td><span class="tilde-tilde">él</span> — pronombre</td><td>Él es muy alto</td></tr>
+        <tr><td><span class="tilde-plain">mas</span> — conjunción (= pero)</td><td><span class="tilde-tilde">más</span> — adverbio comparativo</td><td>Soy más alto que tú</td></tr>
+        <tr><td><span class="tilde-plain">mi</span> — posesivo / nota musical</td><td><span class="tilde-tilde">mí</span> — pronombre preposicional</td><td>A mí me gusta</td></tr>
+        <tr><td><span class="tilde-plain">se</span> — pronombre reflexivo</td><td><span class="tilde-tilde">sé</span> — saber (1ª sg.) / ser (imperativo)</td><td>No lo sé. Sé bueno.</td></tr>
+        <tr><td><span class="tilde-plain">si</span> — conjunción / nota musical</td><td><span class="tilde-tilde">sí</span> — afirmación / pronombre refl.</td><td>Sí, voy. Está seguro de sí mismo.</td></tr>
+        <tr><td><span class="tilde-plain">te</span> — pronombre átono</td><td><span class="tilde-tilde">té</span> — planta / infusión</td><td>La hora del té</td></tr>
+        <tr><td><span class="tilde-plain">tu</span> — posesivo</td><td><span class="tilde-tilde">tú</span> — pronombre nominativo</td><td>¿Tú qué dices?</td></tr>
+      </table>
+      <div class="rule-group" style="margin-top:16px;">
+        <h4>Interrogativos y exclamativos (con tilde)</h4>
+        <div class="example-box"><em>qué, cuál, quién, cómo, cuán, cuánto, cuándo, dónde, adónde</em></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Los demostrativos <em>este, ese, aquel</em> y sus variantes <strong>nunca</strong> llevan tilde (norma RAE 2010).</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><em>Solo</em> (adverbio/adjetivo) <strong>nunca</strong> lleva tilde. Si hay ambigüedad, usar <em>únicamente</em> o <em>solamente</em>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">6</span>
+      <h3>Porque / Porqué / Por que / Por qué</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="rule-table">
+        <tr><th>Forma</th><th>Categoría</th><th>Uso</th><th>Ejemplo</th></tr>
+        <tr><td><strong>porque</strong></td><td>Conjunción causal</td><td>Equivale a «ya que», «puesto que»</td><td>Lo hizo <em>porque</em> quería.</td></tr>
+        <tr><td><strong>porqué</strong></td><td>Sustantivo (aguda → tilde)</td><td>= motivo, razón. Admite plural: <em>los porqués</em></td><td>No sé el <em>porqué</em> de su silencio.</td></tr>
+        <tr><td><strong>por que</strong></td><td>Prep. + pronombre relativo</td><td>= «por el cual». Se puede intercalar artículo.</td><td>La razón <em>por (la) que</em> vino.</td></tr>
+        <tr><td><strong>por qué</strong></td><td>Prep. + interrogativo</td><td>Oraciones interrogativas o exclamativas</td><td>¿<em>Por qué</em> lo hiciste?</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">7</span>
+      <h3>Signos de Puntuación</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>La coma — errores frecuentes</h4>
+        <div class="rule-item"><span class="rule-bullet">✗</span><div class="rule-text"><strong>Nunca</strong> se pone coma entre sujeto y verbo, aunque el sujeto sea largo: <em>«Mis padres, tíos y abuelos me felicitaron»</em> (correcto, sin coma antes del verbo)</div></div>
+        <div class="rule-item"><span class="rule-bullet">✓</span><div class="rule-text">Se pone coma delante de <em>pero, mas, aunque, sino (que)</em>: <em>«Hazlo si quieres, pero no te quejes»</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Tras adverbios y locuciones que afectan a toda la oración: <em>francamente, generalmente, por lo común,</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Punto y coma — usos principales</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Entre oraciones yuxtapuestas: <em>«Puede irse; ya no hay nada más que hacer»</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">La palabra tras punto y coma se escribe siempre con <strong>minúscula</strong></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Signos de interrogación y exclamación</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Se usan <strong>siempre dobles</strong> (apertura + cierre): ¿? y ¡!</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">No se añade punto de cierre tras ¿? o ¡!</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Combinación interrogativa-exclamativa recomendada: <em>¿¡Qué estás diciendo!?</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Raya (—) vs Guion (-)</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">La <strong>raya</strong> es más larga. Se usa para incisos y para introducir diálogos.</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">El <strong>guion</strong> une palabras: <em>teórico-práctico, España-Argentina</em>; divide palabras a final de línea.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">8</span>
+      <h3>Mayúsculas y Minúsculas</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Con minúscula</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Días de la semana y meses: <em>lunes, enero</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Puntos cardinales (salvo que formen nombre propio): <em>el norte, el sur</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Títulos, cargos y empleos (siempre): <em>el rey, el presidente, el papa</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Movimientos artísticos: <em>el modernismo, el surrealismo</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Títulos abreviados de obras: <em>el Quijote, la Celestina</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Con mayúscula</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Asignaturas: <em>Biología, Matemáticas, Lengua</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Épocas históricas: <em>la Antigüedad, el Romanticismo</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Solo la primera palabra del título de una obra: <em>Libro de buen amor, Divina comedia</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Publicaciones periódicas: <em>El País, El Correo de Andalucía</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Costas (incluido el genérico): <em>Costa Azul, Costa del Sol</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Sobrenombres y apodos (el artículo previo, en minúscula): <em>Alfonso X el Sabio</em></div></div>
+      </div>
+      <div class="attention-box">La mayúscula NO exime de poner tilde: <em>Ángeles, Óscar</em>. Las letras J e I no llevan punto en mayúscula.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">9</span>
+      <h3>Abreviaturas, Siglas y Acrónimos</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Abreviaturas</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Se cierran con punto: <em>etc., art., pág.</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>NO</strong> llevan punto: elementos químicos (H, O), unidades de medida (km, g), puntos cardinales (N, S)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Plural de letra única: duplicar la letra: <em>pp.</em> (páginas), <em>ss.</em> (siguientes), <em>FF.AA.</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Mantienen la tilde si la vocal acentuada aparece: <em>admón., pág., teléf.</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Siglas vs Acrónimos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Sigla:</strong> se deletrea (OMS, DNI). Siempre mayúsculas, sin tilde, sin puntos, invariable en plural: <em>varias ONG, los DVD</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Acrónimo:</strong> se lee como palabra (RENFE, ovni, Unicef). Puede lexicalizarse y escribirse en minúscula. Sí forma plural: <em>ovnis</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Si dígrafos ch o ll forman parte de una sigla: primera letra en mayúscula, segunda en minúscula: <em>PCCh</em></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">10</span>
+      <h3>Latinismos y Extranjerismos</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Extranjerismos crudos (no adaptados)</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Se escriben en <strong>cursiva</strong> (o entre comillas): <em>software, flash, piercing, hooligan</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Extranjerismos adaptados</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Modifican grafía y llevan tilde si les corresponde: <em>by-pass → baipás, croissant → cruasán, spaghetti → espagueti</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Doble consonante se simplifica: <em>scanner → escáner</em></div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Latinismos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Locuciones latinas:</strong> sin tilde, en cursiva: <em>grosso modo, habeas corpus, vox populi, motu proprio, alter ego</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text"><strong>Latinismos adaptados</strong> de uso frecuente: llevan tilde si les corresponde: <em>hábitat, déficit, currículum, referéndum</em></div></div>
+      </div>
+      <div class="attention-box">
+        <strong>«Grosso modo»</strong>: locución latina que NO lleva preposición «a» delante (nunca «a grosso modo»). Se escribe en cursiva. Con doble S.<br><br>
+        <strong>«Motu proprio»</strong>: locución latina correcta (no «motu propio»). En cursiva, sin tilde.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">11</span>
+      <h3>Expresiones Numéricas</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="rule-group">
+        <h4>Números arábigos</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Separación de grupos de 3 dígitos: solo con espacio en blanco: <em>1 000 000</em> (no con punto ni coma)</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Punto o coma solo como <strong>marcador decimal</strong>: <em>15 258,67</em></div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Sin separación: años (2011), páginas, códigos postales, nº de leyes</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Números ordinales — ¡Examen frecuente!</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Los <strong>partitivos</strong> (onceavo, doceavo...) indican fracción, <strong>NO posición ordinal</strong>. Decir «el onceavo mes» es incorrecto; lo correcto es «el undécimo mes».</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">11 → <strong>undécimo</strong> (no onceavo para ordinal). 12 → <strong>duodécimo</strong>.</div></div>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Los números romanos NO se acompañan de letra volada: «II Congreso», nunca «IIº Congreso».</div></div>
+      </div>
+      <div class="rule-group">
+        <h4>Expresión de la hora</h4>
+        <div class="rule-item"><span class="rule-bullet">→</span><div class="rule-text">Horas separadas de minutos con dos puntos: <em>13:45</em>. El símbolo h separado por espacio: <em>14:45 h</em>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="number">12</span>
+      <h3>Palabras de Grafía Frecuentemente Errónea</h3>
+      <span class="card-chevron">▼</span>
+    </div>
+    <div class="card-body">
+      <table class="rule-table">
+        <tr><th>Correcto</th><th>Incorrecto</th><th>Nota</th></tr>
+        <tr><td class="correct">idiosincrasia</td><td class="wrong">idiosincracia</td><td>Terminación -asia, no -acia</td></tr>
+        <tr><td class="correct">vicisitud</td><td class="wrong">visicitud</td><td>Frecuente error de orden de letras</td></tr>
+        <tr><td class="correct">beneficencia</td><td class="wrong">beneficiencia</td><td>Sin la -i- intercalada</td></tr>
+        <tr><td class="correct">ermita</td><td class="wrong">hermita</td><td>Sin h inicial</td></tr>
+        <tr><td class="correct">desechos</td><td class="wrong">deshechos</td><td>Residuos ≠ deshecho (de deshacer)</td></tr>
+        <tr><td class="correct">a gusto</td><td class="wrong">agusto</td><td>Dos palabras</td></tr>
+        <tr><td class="correct">sobre todo</td><td class="wrong">sobretodo</td><td>Dos palabras (sobretodo = prenda)</td></tr>
+        <tr><td class="correct">cayeron</td><td class="wrong">calleron</td><td>Del verbo caer, no callar</td></tr>
+        <tr><td class="correct">infligir</td><td class="wrong">infringir</td><td>Infligir = causar un daño/castigo; Infringir = violar una norma</td></tr>
+        <tr><td class="correct">delante de él</td><td class="wrong">delante suya</td><td>Vulgarismo a evitar</td></tr>
+        <tr><td class="correct">motu proprio</td><td class="wrong">motu propio</td><td>Locución latina; -pp- doble</td></tr>
+        <tr><td class="correct">grosso modo</td><td class="wrong">a grosso modo / groso modo</td><td>Sin «a» y con doble -ss-</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /panel-ortografia -->
+
+<!-- ===== TEST ===== -->
+<div class="panel" id="panel-test">
+  <p class="section-title">Test · Simulacro y Estudio</p>
+  <p class="section-subtitle">155 preguntas con preguntas oficiales de exámenes reales + batería tipo Policía Nacional</p>
+
+  <div id="test-setup">
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num" id="stat-total">155</div><div class="stat-label">Preguntas</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><div class="stat-num" id="stat-oficial">13</div><div class="stat-label">Oficiales</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><div class="stat-num" id="stat-ortografia">110</div><div class="stat-label">Ortografía</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><div class="stat-num" id="stat-gramatica">45</div><div class="stat-label">Gramática</div></div>
+    </div>
+
+    <div class="category-filter">
+      <button class="filter-btn active" onclick="setFilter('all', this)">Todo</button>
+      <button class="filter-btn" onclick="setFilter('ortografia', this)">Ortografía</button>
+      <button class="filter-btn" onclick="setFilter('gramatica', this)">Gramática</button>
+      <button class="filter-btn" onclick="setFilter('oficial', this)">⭐ Preguntas oficiales</button>
+    </div>
+
+    <div class="test-modes">
+      <div class="mode-card selected" onclick="selectMode('simulacro', this)">
+        <div class="mode-icon">⏱</div>
+        <div class="mode-title">Simulacro</div>
+        <div class="mode-desc">5 preguntas aleatorias con temporizador. Calificación final al estilo del examen real.</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('estudio', this)">
+        <div class="mode-icon">📚</div>
+        <div class="mode-title">Modo Estudio</div>
+        <div class="mode-desc">Preguntas una a una con corrección inmediata y explicación detallada.</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="btn-primary" id="btn-start" onclick="startTest()">Comenzar test</button>
+    </div>
+  </div>
+
+  <div class="question-area" id="question-area">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-meta">
+      <span class="question-badge" id="mode-badge">Simulacro</span>
+      <span class="question-counter" id="q-counter">1 / 5</span>
+      <span class="timer-display" id="timer-display" style="display:none">2:00</span>
+    </div>
+    <div class="question-card">
+      <div id="q-tags"></div>
+      <div class="question-text" id="q-text"></div>
+      <div class="options" id="q-options"></div>
+      <div class="explanation-box" id="q-explanation"></div>
+    </div>
+    <div class="question-actions">
+      <button class="btn-secondary" id="btn-stop" onclick="stopTest()">Salir</button>
+      <button class="btn-primary" id="btn-next" onclick="nextQuestion()" style="display:none">Siguiente →</button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="result-screen">
+    <div class="result-score" id="result-score-el">
+      <span id="result-correct-num">0</span><span class="score-total"> / <span id="result-total-num">5</span></span>
+    </div>
+    <div class="result-label" id="result-label">¡Muy bien!</div>
+    <div class="result-desc" id="result-desc">Sigue practicando para mejorar.</div>
+    <div class="result-breakdown">
+      <div class="breakdown-item breakdown-correct">
+        <div class="breakdown-num" id="bd-correct">0</div>
+        <div class="breakdown-label">Correctas</div>
+      </div>
+      <div class="breakdown-item breakdown-wrong">
+        <div class="breakdown-num" id="bd-wrong">0</div>
+        <div class="breakdown-label">Incorrectas</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <button class="btn-primary" onclick="resetTest()">Nuevo test</button>
+      <button class="btn-secondary" onclick="resetTest()">Volver</button>
+    </div>
+  </div>
+
+</div><!-- /panel-test -->
+
+</main>
+
+<script>
+// ===== NAVIGATION =====
+function switchTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function toggleCard(header) {
+  const card = header.parentElement;
+  card.classList.toggle('open');
+}
+
+// ===== TEST DATA =====
+const QUESTIONS = [
+  // === OFICIALES REALES ===
+  {id:1, cat:'ortografia', tag:'oficial', promo:'P39·2023',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['Lo planificamos a grosso modo, sin entrar en detalles.','Lo planificamos grosso modo, sin entrar en detalles.','Lo planificamos a groso modo, sin entrar en detalles.'],
+   correct:1, exp:'"Grosso modo" es locución latina que NO lleva preposición "a" delante. Además, se escribe con doble -ss-.'},
+  {id:2, cat:'gramatica', tag:'oficial', promo:'P39·2023',
+   text:'Señale el pretérito perfecto de subjuntivo del verbo "investigar":',
+   opts:['Hubiera o hubiese investigado.','Hubiere investigado.','Haya investigado.'],
+   correct:2, exp:'Pretérito perfecto de subjuntivo = presente de subjuntivo de haber + participio = "haya investigado". "Hubiera/hubiese" es pluscuamperfecto. "Hubiere" es futuro perfecto de subjuntivo.'},
+  {id:3, cat:'gramatica', tag:'oficial', promo:'P39·2023',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['Cuando vi a Marta la conminé a cejar en su actitud.','Cuando vi a Marta le conminé a cejar en su actitud.','Las dos frases anteriores son correctas.'],
+   correct:0, exp:'"Conminar" es verbo transitivo que rige complemento directo de persona → pronombre de acusativo "la". Usar "le" sería leísmo incorrecto.'},
+  {id:4, cat:'ortografia', tag:'oficial', promo:'P39·2023',
+   text:'Indique la opción correcta:',
+   opts:['Idiosincracia.','Vicisitud.','Beneficiencia.'],
+   correct:1, exp:'"Idiosincrasia" (no -cracia). "Beneficencia" (no beneficiencia). "Vicisitud" es la única correcta.'},
+  {id:5, cat:'gramatica', tag:'oficial', promo:'P39·2023',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['Mi hermano es mayor que tú.','Mi hermano es más mayor que tú.','Las dos frases anteriores son correctas.'],
+   correct:0, exp:'"Mayor" ya es comparativo sintético. "Más mayor" es pleonasmo incorrecto, igual que "más mejor" o "más peor". Los comparativos sintéticos no admiten el adverbio "más" delante.'},
+  {id:6, cat:'ortografia', tag:'oficial', promo:'P39·2023',
+   text:'Conforme a las reglas ortográficas:',
+   opts:['La palabra biceps es llana, por lo tanto, no lleva tilde al terminar en la letra s.','La palabra bíceps es llana y lleva tilde porque la letra s final va precedida de otra consonante.','Se puede escribir indistintamente biceps o bíceps.'],
+   correct:1, exp:'"Bíceps" termina en -ps (consonante + s), no en -s simple. Las palabras llanas que no terminan en vocal, -n o -s simple llevan tilde. La RAE exige la tilde.'},
+  {id:7, cat:'gramatica', tag:'oficial', promo:'P40·2024',
+   text:'La Real Academia de la Lengua define como verbo incoativo al verbo que:',
+   opts:['Indica el comienzo de una acción.','Se construye sin complemento directo.','Expresa una acción que se compone de acciones repetidas.'],
+   correct:0, exp:'Incoativo = inicio de acción (florecer, amanecer). La opción B define al verbo intransitivo. La opción C define al verbo iterativo.'},
+  {id:8, cat:'ortografia', tag:'oficial', promo:'P40·2024',
+   text:'¿Cuál de estas frases está escrita correctamente?',
+   opts:['No sabemos los porqués de su expulsión del equipo.','Tras el desafortunado accidente, falleció debido a la inhalación de gases tóxicos.','La gravedad del delito determinó que el juez le infringiera una dura pena de prisión.'],
+   correct:0, exp:'"Porqués" es correcto: sustantivo plural con tilde. La opción C es incorrecta: "infringir" = violar una norma; lo correcto aquí es "infligir" (causar un castigo o pena).'},
+  {id:9, cat:'ortografia', tag:'oficial', promo:'P40·2024',
+   text:'Selecciona la frase correcta:',
+   opts:['Los hechos acaecidos ayer no han echo más que crear confusión.','En la feria de arte había muchas personas admirando las obras expuestas.','En la feria de arte habían muchas personas admirando las obras expuestas.'],
+   correct:1, exp:'"Haber" impersonal es invariable → "había", nunca "habían". La opción A tiene error grave: "han echo" debería ser "han hecho" (participio de hacer).'},
+  {id:10, cat:'ortografia', tag:'oficial', promo:'P41·Marzo2025',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Los lugareños veneran una imagen de la Virgen albergada en la hermita.','Los investigadores descubrieron una nueva especie durante la expedición del onceavo mes.','Las reacciones químicas exotérmicas liberan energía en forma de calor, mientras que las endotérmicas absorben energía del entorno.'],
+   correct:2, exp:'A: "hermita" → "ermita" (sin h). B: "onceavo" es partitivo (fraccionario), no ordinal; lo correcto es "undécimo" mes.'},
+  {id:11, cat:'ortografia', tag:'oficial', promo:'P41·Marzo2025',
+   text:'Indique cuál de las siguientes frases está escrita correctamente:',
+   opts:['El reciclaje adecuado de deshechos electrónicos reduce la contaminación por metales pesados.','Tras un largo día de trabajo, pudo disfrutar agusto de la tranquilidad del hogar.','La genialidad de Salvador Dalí es un caso aparte en la historia del arte.'],
+   correct:2, exp:'A: "deshechos" (de deshacer) ≠ "desechos" (residuos). B: "agusto" → "a gusto" (se escribe en dos palabras).'},
+  {id:12, cat:'ortografia', tag:'oficial', promo:'P42·Oct2025',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El artista se sentó frente al lienzo, con sus pinceles delante suya, listo para comenzar.','Durante la tormenta varios árboles calleron sobre los coches estacionados.','Mecano, La Unión y Gabinete Caligari reviven la nostalgia musical de los años 80.'],
+   correct:2, exp:'A: "delante suya" es vulgarismo → "delante de él". B: "calleron" no existe → "cayeron" (del verbo caer, no callar).'},
+  {id:13, cat:'ortografia', tag:'oficial', promo:'P42·Oct2025',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['En caso de emergencia habrán salidas señalizadas.','Varios trabajadores abandonaron el estudio motu proprio como medida de protesta.','Los síntomas iniciales pueden ser leves, sobretodo en enfermedades de evolución lenta.'],
+   correct:1, exp:'A: "habrán" → "habrá" (haber impersonal es siempre singular). C: "sobretodo" (prenda de abrigo) → "sobre todo" (expresión de refuerzo: dos palabras).'},
+
+  // === ELABORADAS — ORTOGRAFÍA ===
+  {id:14, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes palabras está escrita correctamente?',
+   opts:['Exhuberante','Exuberante','Esuberante'],
+   correct:1, exp:'"Exuberante" se escribe con -x- porque la sílaba "ex-" va seguida de vocal. No es "exh-" (eso solo se aplica a palabras como "exhumar").'},
+  {id:15, cat:'ortografia', tag:'ortografia',
+   text:'Señala la opción ortográficamente correcta:',
+   opts:['Devemos actuar con responsabilidad.','Debemos actuar con responsabilidad.','Devemos actuar con responsabilidad.'],
+   correct:1, exp:'"Deber" es uno de los verbos que se escribe siempre con -b-: haber, deber, saber, caber.'},
+  {id:16, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas frases usa correctamente la H?',
+   opts:['El testigo echo a correr al ver al ladrón.','El testigo hecho a correr al ver al ladrón.','El testigo echó a correr al ver al ladrón.'],
+   correct:2, exp:'"Echar" (lanzar, hacer) → "echó". "Hecho" es participio de "hacer". Son palabras distintas con H y sin H.'},
+  {id:17, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las opciones es correcta?',
+   opts:['La "o" entre números siempre lleva tilde: ¿Quieres 2 ó 3?','La "o" entre números nunca lleva tilde: 2 o 3','Puede escribirse con o sin tilde indistintamente entre números.'],
+   correct:1, exp:'Desde la reforma de 2010, la "o" entre números ya NO lleva tilde. El riesgo de confusión con el cero es mínimo. Correcto: "2 o 3".'},
+  {id:18, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras lleva tilde correctamente?',
+   opts:['Balon','Balón','Bálón'],
+   correct:1, exp:'"Balón" es palabra aguda que termina en -n → lleva tilde en la última sílaba.'},
+  {id:19, cat:'ortografia', tag:'ortografia',
+   text:'Señala la forma correcta del plural de la sigla ONG:',
+   opts:['ONGs','Las ONG','Las ONGs'],
+   correct:1, exp:'Las siglas son invariables en plural en la escritura española. El plural se expresa con el artículo o determinante que las precede: "varias ONG", "las ONG".'},
+  {id:20, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas frases está correctamente escrita?',
+   opts:['Los álbums de fotos estaban ordenados.','Los álbumes de fotos estaban ordenados.','Los albumes de fotos estaban ordenados.'],
+   correct:1, exp:'El plural de "álbum" es "álbumes" (forma correcta según la RAE, no "álbums").'},
+  {id:21, cat:'ortografia', tag:'ortografia',
+   text:'Indica la opción correcta sobre "sino" y "si no":',
+   opts:['No estudia, sino que trabaja. (correcto)','No estudia, si no que trabaja. (correcto)','Ambas formas son igualmente válidas.'],
+   correct:0, exp:'"Sino" (una palabra) es conjunción adversativa equivalente a "pero sí". "Si no" (dos palabras) = conjunción "si" + adverbio "no": "Iré si no llueve".'},
+  {id:22, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes palabras tiene la grafía correcta?',
+   opts:['Bienvenido','Bienbenido','Bienvenido'],
+   correct:0, exp:'"Bienvenido" = bien + venido. La segunda parte procede de "venir" (verbo que va con -v- en sus formas con ese sonido).'},
+  {id:23, cat:'ortografia', tag:'ortografia',
+   text:'¿Cómo se escribe correctamente la forma verbal del verbo "coger" en subjuntivo: "para que yo... el autobús"?',
+   opts:['...coga el autobús.','...coja el autobús.','...cogea el autobús.'],
+   correct:1, exp:'Los verbos en -ger/-gir cambian g→j ante a, o para mantener el sonido: "coger" → "coja" (no "coga"). La g no puede aparecer ante -a en esta conjugación.'},
+  {id:24, cat:'ortografia', tag:'ortografia',
+   text:'¿Qué opción muestra el uso correcto de las comillas?',
+   opts:['Dijo: "Vaya \'cacharro\' que se ha comprado". (uso correcto)','Dijo: «Vaya "cacharro" que se ha comprado». (uso correcto)','Son equivalentes y puede usarse cualquier combinación.'],
+   correct:1, exp:'La norma española indica: primero comillas angulares « », luego las inglesas " " para el interior, y finalmente las simples \' \'. Las angulares son las preferidas en textos impresos.'},
+  {id:25, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras es un extranjerismo crudo que debe escribirse en cursiva?',
+   opts:['fútbol','software','baipás'],
+   correct:1, exp:'"Software" es un extranjerismo crudo (no adaptado al español) y debe escribirse en cursiva o entre comillas. "Fútbol" y "baipás" ya están adaptados.'},
+  {id:26, cat:'ortografia', tag:'ortografia',
+   text:'La palabra "país" lleva tilde porque:',
+   opts:['Es palabra esdrújula.','Tiene un hiato de vocal cerrada tónica + vocal abierta átona, que siempre se acentúa.','Es una excepción de las reglas generales de acentuación.'],
+   correct:1, exp:'"País" (pa-ís): la i es una vocal cerrada tónica seguida de la vocal abierta "a" → hiato que siempre lleva tilde, independientemente de las reglas generales.'},
+  {id:27, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál es el plural correcto de "sándwich"?',
+   opts:['sándwichs','sándwiches','sándwichs'],
+   correct:1, exp:'"Sándwich" es una excepción: su plural es "sándwiches" (con -es), no "sándwichs".'},
+  {id:28, cat:'ortografia', tag:'ortografia',
+   text:'¿Cómo se separan correctamente los dígitos de un número como el millón en español?',
+   opts:['1.000.000 (con puntos)','1,000,000 (con comas)','1 000 000 (con espacios)'],
+   correct:2, exp:'Desde la norma RAE actual, los grupos de tres dígitos en la parte entera se separan únicamente con un espacio en blanco, nunca con punto ni coma (estos se reservan para decimales).'},
+  {id:29, cat:'ortografia', tag:'ortografia',
+   text:'Indica la opción correcta sobre los signos de puntuación:',
+   opts:['¿Has venido solo?. Me alegra verte.','¿Has venido solo? Me alegra verte.','¿Has venido solo?, me alegra verte.'],
+   correct:1, exp:'Nunca se escribe punto inmediatamente detrás de un signo de cierre de interrogación o exclamación. La pregunta ya cierra el enunciado; la siguiente oración empieza directamente.'},
+  {id:30, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas frases es correcta?',
+   opts:['Haber si puedes venir mañana.','A ver si puedes venir mañana.','Haber si podías venir mañana.'],
+   correct:1, exp:'"A ver" (= vamos a ver) se escribe separado. "Haber" es el verbo haber. "Haber si" es un error muy frecuente.'},
+  {id:31, cat:'ortografia', tag:'ortografia',
+   text:'Señala la opción correcta sobre las mayúsculas:',
+   opts:['Los cargos y títulos siempre se escriben con mayúscula: el Rey Juan Carlos.','Los cargos y títulos se escriben siempre con minúscula: el rey Juan Carlos.','Los cargos se escriben con mayúscula solo cuando aparecen solos, sin el nombre propio.'],
+   correct:1, exp:'Los títulos, cargos y empleos se escriben siempre con minúscula, sea cual sea su rango y acompañen o no al nombre propio: "el rey", "el presidente", "el papa".'},
+  {id:32, cat:'ortografia', tag:'ortografia',
+   text:'¿Cómo se escribe correctamente este latinismo?',
+   opts:['El detective actuó de motu proprio.','El detective actuó motu proprio.','El detective actuó de motus propio.'],
+   correct:1, exp:'"Motu proprio" es locución latina que NO lleva preposición "de" delante. Además se escribe con doble -pp- y en cursiva.'},
+  {id:33, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras está mal escrita?',
+   opts:['Leyeron','Proveyendo','Hiceron'],
+   correct:2, exp:'"Hiceron" no existe. El pasado de "hacer" es "hicieron" (con -ie-). "Leyeron" y "proveyendo" son correctas.'},
+  {id:34, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál es la grafía correcta de estas palabras?',
+   opts:['Sinvergüenza, sintecho, sinrazón','Sin vergüenza, sin techo, sinrazón','Sinvergüenza, sin techo, sinrazón'],
+   correct:2, exp:'"Sinvergüenza" y "sinrazón" son palabras ya lexicalizadas que se escriben unidas. "Sin techo" puede escribirse junto o separado (sinTecho o sin techo), pero "sinvergüenza" siempre junto.'},
+  {id:35, cat:'ortografia', tag:'ortografia',
+   text:'¿Qué forma es correcta para el verbo "satisfacer" en imperativo 2ª persona plural?',
+   opts:['Satisfacer la tarea para mañana.','Satisfaced la tarea para mañana.','Satisfacen la tarea para mañana.'],
+   correct:1, exp:'El imperativo de 2ª persona plural se forma con -d final: "satisfaced", no con infinitivo "satisfacer". Usar el infinitivo en lugar del imperativo es un error frecuente.'},
+  {id:36, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes palabras lleva tilde correctamente?',
+   opts:['Guíon','Guion','Guión'],
+   correct:1, exp:'"Guion" se considera monosílaba a efectos ortográficos (las dos vocales forman diptongo) y los monosílabos no llevan tilde. Correcto: "guion", sin tilde.'},
+  {id:37, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases usa correctamente las abreviaturas?',
+   opts:['Las páginas pp. 23-45 contienen la respuesta.','Las páginas pags. 23-45 contienen la respuesta.','Las páginas pag 23-45 contienen la respuesta.'],
+   correct:0, exp:'"Pp." es el plural de "pág." (páginas) y se escribe con punto. Las abreviaturas de una sola letra forman su plural duplicando la letra.'},
+  {id:38, cat:'ortografia', tag:'ortografia',
+   text:'Señala la opción correcta:',
+   opts:['El siglo XXIº ha traído grandes cambios.','El siglo XXI ha traído grandes cambios.','El siglo 21 ha traído grandes cambios.'],
+   correct:1, exp:'Los números romanos usados con valor ordinal no deben escribirse acompañados de letras voladas: "siglo XXI", no "siglo XXIº". Los siglos se escriben siempre en romano.'},
+  {id:39, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras está adaptada correctamente del inglés?',
+   opts:['Whisky (forma original, correcta en español)','Güisqui (forma adaptada preferida)','Wiski (forma adaptada válida en español)'],
+   correct:2, exp:'Según la RAE, la adaptación preferida es "wiski" (con w y sin -y final). "Güisqui" fue propuesta pero "wiski" es la más aceptada. "Whisky" puede mantenerse como extranjerismo crudo en cursiva.'},
+  {id:40, cat:'ortografia', tag:'ortografia',
+   text:'¿Cómo se escribe correctamente el prefijo "ex" con un cargo compuesto?',
+   opts:['El exprimer ministro dimitió.','El ex-primer ministro dimitió.','El ex primer ministro dimitió.'],
+   correct:2, exp:'Ante bases léxicas formadas por más de una palabra, el prefijo "ex" se escribe separado con espacio: "ex primer ministro". Ante una sola palabra va soldado: "exmarido".'},
+
+  // === ELABORADAS — GRAMÁTICA ===
+  {id:41, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes oraciones contiene un complemento directo?',
+   opts:['María corre por el parque cada mañana.','Juan compró un libro de historia medieval.','Pedro habla con sus amigos en el recreo.'],
+   correct:1, exp:'"Un libro de historia medieval" es el CD. Se puede comprobar sustituyéndolo por "lo": "Juan lo compró". "Por el parque" y "con sus amigos" son complementos circunstanciales.'},
+  {id:42, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de los siguientes es un verbo defectivo?',
+   opts:['Hablar','Abolir','Poder'],
+   correct:1, exp:'"Abolir" es un verbo defectivo: solo se conjuga en formas cuya desinencia contiene la vocal i (abolí, aboles, etc.). No tiene todas las formas de la conjugación completa.'},
+  {id:43, cat:'gramatica', tag:'gramatica',
+   text:'En la oración "El cielo se puso rojo al atardecer", ¿qué función tiene "rojo"?',
+   opts:['Complemento directo','Atributo','Complemento predicativo'],
+   correct:1, exp:'"Ponerse" es verbo copulativo (de cambio de estado) y "rojo" es el atributo que predica del sujeto "el cielo". Los verbos ponerse, volverse, quedarse, hacerse también admiten atributo.'},
+  {id:44, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuántas conjugaciones verbales tiene el español?',
+   opts:['Dos: verbos en -ar y verbos en -er/-ir','Tres: verbos en -ar, -er y -ir','Cuatro: verbos en -ar, -er, -ir y -ar/-er irregulares'],
+   correct:1, exp:'El español tiene tres conjugaciones: 1ª (-ar), 2ª (-er) y 3ª (-ir).'},
+  {id:45, cat:'gramatica', tag:'gramatica',
+   text:'¿Qué pronombre personal es incorrecto en la oración "Vi a María y le saludé"?',
+   opts:['Le es correcto (dativo de CI)','Le es incorrecto, debería ser "la" (acusativo de CD)','Ambas opciones son igualmente válidas en todo el español'],
+   correct:1, exp:'"Saludar" es verbo transitivo que rige CD, no CI. CD de persona femenina → "la". Usar "le" para CD femenino es leísmo inaceptable (a diferencia del leísmo masculino de persona, tolerado en España).'},
+  {id:46, cat:'gramatica', tag:'gramatica',
+   text:'¿En qué oración hay un error morfosintáctico?',
+   opts:['Habían muchos problemas que resolver.','Había muchos problemas que resolver.','No hubo ningún problema en la reunión.'],
+   correct:0, exp:'"Haber" como verbo existencial o impersonal es invariable en número. Siempre en singular: "había muchos problemas", nunca "habían".'},
+  {id:47, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de estas formas es el gerundio del verbo "proveer"?',
+   opts:['Proveyendo','Proveiendo','Proveyiendo'],
+   correct:0, exp:'"Proveer" sigue el modelo de "leer" y "creer": en gerundio la -i- intervocálica se convierte en -y-: "proveyendo" (no "proveiendo").'},
+  {id:48, cat:'gramatica', tag:'gramatica',
+   text:'La oración "Se venden pisos" es:',
+   opts:['Pasiva refleja','Impersonal refleja','Activa con sujeto expreso'],
+   correct:0, exp:'"Se venden pisos": el verbo concuerda con "pisos" (sujeto), luego es una pasiva refleja (construcción con "se" de pasiva). Si no hubiera concordancia ("se vende" sin sustantivo sujeto), sería impersonal refleja.'},
+  {id:49, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes es una oración subordinada adverbial concesiva?',
+   opts:['Llegó tarde porque había tráfico.','Aunque llovía, salió a correr.','Si estudias, aprobarás.'],
+   correct:1, exp:'Las subordinadas concesivas expresan un obstáculo que no impide la acción principal. Se introducen con "aunque". La opción A es causal; la C es condicional.'},
+  {id:50, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de estas formas verbales es un futuro perfecto de subjuntivo?',
+   opts:['Hubiera cantado','Hubiere cantado','Haya cantado'],
+   correct:1, exp:'"Hubiere cantado" = futuro perfecto de subjuntivo (forma poco usada, principalmente en lenguaje jurídico). "Hubiera/hubiese cantado" = pluscuamperfecto. "Haya cantado" = pretérito perfecto.'},
+  {id:51, cat:'gramatica', tag:'gramatica',
+   text:'¿Qué tipo de adjetivo es "quinto" en "El quinto elemento"?',
+   opts:['Adjetivo calificativo','Numeral ordinal','Numeral partitivo'],
+   correct:1, exp:'"Quinto" es un numeral ordinal: indica posición en una serie. Los ordinales son un subtipo de adjetivos numerales determinativos.'},
+  {id:52, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes conjunciones es adversativa?',
+   opts:['Y','O','Sino'],
+   correct:2, exp:'"Sino" es conjunción adversativa exclusiva. "Y" es copulativa. "O" es disyuntiva.'},
+  {id:53, cat:'gramatica', tag:'gramatica',
+   text:'¿Qué forma verbal aparece en "Colocó las flores que trajiste"?',
+   opts:['Trajiste: pretérito imperfecto de indicativo','Trajiste: pretérito perfecto simple de indicativo','Trajiste: pretérito pluscuamperfecto de indicativo'],
+   correct:1, exp:'"Trajiste" es la 2ª persona singular del pretérito perfecto simple (indefinido) de indicativo del verbo "traer".'},
+  {id:54, cat:'gramatica', tag:'gramatica',
+   text:'¿Qué forma apocopada es correcta?',
+   opts:['Una gran mujer ganó el premio.','Una grande mujer ganó el premio.','Una gran mujeres ganaron el premio.'],
+   correct:0, exp:'"Gran" (apócope de "grande") se usa ante sustantivo singular de cualquier género. "Una gran mujer" es correcto. Solo se apocopa en singular; en plural se usa "grandes".'},
+  {id:55, cat:'gramatica', tag:'gramatica',
+   text:'¿En cuál de estas oraciones el pronombre reflexivo está bien usado?',
+   opts:['Juan se habló a sí mismo.','Juan se habló a Juan.','Juan habló a sí mismo.'],
+   correct:0, exp:'"Sí" y "consigo" son pronombres inherentemente reflexivos: requieren un antecedente en la misma oración. "Juan se habló a sí mismo" es la forma plena y correcta.'},
+  {id:56, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de estas oraciones contiene un complemento de régimen?',
+   opts:['El libro está en la mesa.','El gobierno depende de los ciudadanos.','Llegamos tarde a la reunión.'],
+   correct:1, exp:'"Depender de" exige la preposición "de" como parte de su régimen verbal. "De los ciudadanos" es complemento de régimen, no circunstancial, porque la preposición está exigida por el verbo.'},
+  {id:57, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de estos verbos es copulativo?',
+   opts:['Parecer','Saber','Llegar'],
+   correct:0, exp:'"Parecer" es verbo copulativo (junto a "ser" y "estar"): une el sujeto con un atributo. "Mi hermana parece cansada".'},
+  {id:58, cat:'gramatica', tag:'gramatica',
+   text:'En la oración "Ayer llegó María", el adverbio "ayer" desempeña la función de:',
+   opts:['Complemento directo','Complemento circunstancial de tiempo','Complemento indirecto'],
+   correct:1, exp:'"Ayer" es un adverbio de tiempo que modifica al verbo "llegó" y desempeña la función de complemento circunstancial de tiempo.'},
+  {id:59, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de estos es un sustantivo epiceno?',
+   opts:['La actriz','La víctima','La escritora'],
+   correct:1, exp:'"Víctima" es epiceno: tiene un solo género gramatical (femenino) para ambos sexos biológicos. Decimos "la víctima" tanto para hombre como para mujer. "Actriz" y "escritora" tienen formas de género diferenciadas.'},
+  {id:60, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes afirmaciones sobre los adverbios en -mente es correcta?',
+   opts:['Los adverbios en -mente pierden siempre la tilde del adjetivo base: fácil → facilmente.','Los adverbios en -mente mantienen la tilde del adjetivo base: fácil → fácilmente.','Los adverbios en -mente solo llevan tilde si son palabras agudas.'],
+   correct:1, exp:'Los adverbios terminados en -mente mantienen la acentuación ortográfica del adjetivo del que se forman: fácil → fácilmente; simple → simplemente.'},
+
+  // === MÁS ORTOGRAFÍA ===
+  {id:61, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas expresiones es correcta?',
+   opts:['Vamos ha estudiar juntos.','Vamos a estudiar juntos.','Vamos ha estudiar júntos.'],
+   correct:1, exp:'"A" preposición se escribe sin h. Solo lleva h cuando es 3ª persona singular del verbo haber: "ha comido". Un truco: si se puede pluralizar ("han"), es el verbo; si no, es preposición.'},
+  {id:62, cat:'ortografia', tag:'ortografia',
+   text:'¿Cómo se escribe correctamente?',
+   opts:['El equipo estaba muy unido; por tanto, ganaron la final.','El equipo estaba muy unido, por tanto ganaron la final.','El equipo estaba muy unido: por tanto, ganaron la final.'],
+   correct:0, exp:'Los conectores discursivos ("por tanto", "sin embargo", "no obstante") van precedidos de punto y coma o punto cuando unen oraciones independientes, y seguidos de coma.'},
+  {id:63, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras está correctamente escrita?',
+   opts:['Espléndido','Expléndido','Esplendido'],
+   correct:0, exp:'"Espléndido" se escribe con -s-, no con -x-. Aunque la RAE indica que "ex-" ante grupo consonántico "-pl-" se escribe con x, "espléndido" NO tiene el prefijo ex-; procede del latín "splendidus".'},
+  {id:64, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas frases está escrita correctamente?',
+   opts:['Ahí está el problema que me preocupa.','Hay está el problema que me preocupa.','¡Ay! Está el problema que me preocupa.'],
+   correct:0, exp:'"Ahí" = adverbio de lugar (puede reemplazarse por un nombre de lugar). "Hay" = del verbo haber (existencia). "¡Ay!" = interjección de dolor o sorpresa.'},
+  {id:65, cat:'ortografia', tag:'ortografia',
+   text:'Señala la opción correcta respecto al uso de mayúsculas:',
+   opts:['Alfonso X el sabio fue rey de Castilla.','Alfonso X el Sabio fue rey de Castilla.','Alfonso x el Sabio fue rey de Castilla.'],
+   correct:1, exp:'Los sobrenombres y apodos se escriben con mayúscula inicial, pero el artículo que los precede va en minúscula: "Alfonso X el Sabio".'},
+  {id:66, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál es la opción correcta?',
+   opts:['Los penaltis fueron emocionantes.','Los penaltys fueron emocionantes.','Los penaltyes fueron emocionantes.'],
+   correct:0, exp:'Las palabras terminadas en -y que se han adaptado al castellano forman el plural convirtiendo la y en i y añadiendo -s: penalty → penaltis.'},
+  {id:67, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas frases tiene correcta la puntuación?',
+   opts:['"Vaya cacharro", dijo él.','«Vaya cacharro», dijo él.','«Vaya cacharro» dijo él.'],
+   correct:1, exp:'En textos impresos españoles se usan preferentemente las comillas angulares « ». La coma que sigue al texto entrecomillado va fuera de las comillas de cierre: «...», dijo.'},
+  {id:68, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras lleva correctamente la tilde?',
+   opts:['Decímos','Decimos','Décimos'],
+   correct:1, exp:'"Decimos" es una forma verbal llana terminada en -s → no lleva tilde según las reglas generales. "Décimos" (plural de "décimo") sí lleva tilde por ser esdrújula.'},
+  {id:69, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas opciones es correcta?',
+   opts:['Exmarido y exnovia se encontraron.','Ex-marido y ex-novia se encontraron.','Ex marido y ex novia se encontraron.'],
+   correct:0, exp:'Los prefijos se escriben siempre soldados a la base cuando esta es una sola palabra: "exmarido", "exnovia". Solo se separa con espacio si la base es un nombre compuesto: "ex primer ministro".'},
+  {id:70, cat:'ortografia', tag:'ortografia',
+   text:'¿Qué opción es correcta sobre la acentuación de palabras compuestas?',
+   opts:['El compuesto escrito como una sola palabra sigue las normas de acentuación del compuesto resultante, no de sus componentes: décimo + séptimo = decimoséptimo.','El compuesto siempre mantiene todas las tildes de sus componentes.','Los compuestos escritos como una sola palabra nunca llevan tilde.'],
+   correct:0, exp:'Los compuestos escritos en una sola palabra se acentúan según las reglas del compuesto resultante, no de sus partes: "ciempiés" (cien + pies); "decimoséptimo".'},
+  {id:71, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas frases está correctamente escrita?',
+   opts:['Nació en el año 1.875.','Nació en el año 1875.','Nació en el año 1 875.'],
+   correct:1, exp:'Los años no llevan punto ni espacio: "1875". Solo se admite espacio en blanco para separar grupos de cifras en números de más de cuatro dígitos, y los años son una excepción explícita.'},
+  {id:72, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras está bien escrita?',
+   opts:['Idiosincrasia','Ideosincrasia','Idiosincracia'],
+   correct:0, exp:'"Idiosincrasia" es la única forma correcta. Viene del griego "idios" (propio) + "synkrasia" (mezcla). Terminación -asia, no -acia ni variantes.'},
+  {id:73, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas frases contiene un error?',
+   opts:['El árbol cayó sobre el tejado.','El árbol se cayó sobre el tejado.','El árbol callô sobre el tejado.'],
+   correct:2, exp:'"Calló" (del verbo callar) y "cayó" (del verbo caer) son formas distintas. "Cayó sobre el tejado" es lo correcto. "Callô" ni siquiera tiene grafía correcta.'},
+  {id:74, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál es la forma verbal correcta?',
+   opts:['Si hubiera sabido la respuesta, la hubiera dicho.','Si hubiera sabido la respuesta, la habría dicho.','Si habría sabido la respuesta, la habría dicho.'],
+   correct:1, exp:'En las oraciones condicionales irreales, la prótasis (si + ...) usa el pluscuamperfecto de subjuntivo, y la apódosis usa el condicional compuesto: "Si hubiera sabido... la habría dicho".'},
+  {id:75, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de estas palabras tiene grafía correcta?',
+   opts:['Pervivir','Pervivir','Perbivir'],
+   correct:0, exp:'"Pervivir" (sobrevivir, perdurar) se escribe con per- (prefijo latino) y con -v- de vivir. "Perbivir" es incorrecto.'},
+
+  // === BATERÍA POLICÍA NACIONAL — 80 PREGUNTAS ===
+  // BLOQUE 1: Frase correctamente escrita
+  {id:101, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['En la reunión habían muchas personas interesadas en el proyecto.','En la reunión había muchas personas interesadas en el proyecto.','En la reunión hubieron muchas personas interesadas en el proyecto.'],
+   correct:1, exp:'Cuando el verbo haber se usa con valor impersonal, debe ir en singular: había, hubo, habrá, habría. Nunca "habían" ni "hubieron".'},
+  {id:102, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El agente actuó motu propio durante la intervención.','El agente actuó de motu proprio durante la intervención.','El agente actuó motu proprio durante la intervención.'],
+   correct:2, exp:'La locución latina correcta es "motu proprio": sin preposición "de" delante y con doble -pp-. Se escribe en cursiva.'},
+  {id:103, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['No sabemos el porque de su ausencia.','No sabemos el por qué de su ausencia.','No sabemos el porqué de su ausencia.'],
+   correct:2, exp:'Cuando equivale a "el motivo" o "la razón", se escribe junto y con tilde: el porqué. Es un sustantivo.'},
+  {id:104, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Se sentó detrás mía durante toda la clase.','Se sentó detrás de mí durante toda la clase.','Se sentó detrás mío durante toda la clase.'],
+   correct:1, exp:'Con adverbios como detrás, delante, encima, debajo, cerca, lo correcto es usar "de mí, de ti, de él". Las formas "detrás mía/suya" son construcciones incorrectas.'},
+  {id:105, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Me gusta estudiar sobretodo por la mañana.','Me gusta estudiar sobre todo por la mañana.','Me gusta estudiar sobre-todo por la mañana.'],
+   correct:1, exp:'"Sobre todo" (separado) significa "especialmente". "Sobretodo" (junto) es una prenda de vestir (abrigo largo). No confundirlos.'},
+  {id:106, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El juez le infringió una pena de prisión.','El juez le infligió una pena de prisión.','El juez le infrinjió una pena de prisión.'],
+   correct:1, exp:'"Infligir" significa imponer un castigo o causar daño. "Infringir" significa quebrantar o violar una norma. Son parónimos distintos.'},
+  {id:107, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El reciclaje de deshechos electrónicos es fundamental.','El reciclaje de desechos electrónicos es fundamental.','El reciclaje de desechos electrónicos és fundamental.'],
+   correct:1, exp:'"Desechos" = residuos. "Deshecho" (de deshacer) = algo que se ha deshecho. Son palabras distintas. "És" no existe en español.'},
+  {id:108, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Tras el examen, se quedó agusto con su resultado.','Tras el examen, se quedó a gusto con su resultado.','Tras el examen, se quedó a-gusto con su resultado.'],
+   correct:1, exp:'"A gusto" se escribe en dos palabras separadas. "Agusto" no existe como expresión. No lleva guion.'},
+  {id:109, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Los árboles calleron por el viento.','Los árboles cayeron por el viento.','Los árboles calléron por el viento.'],
+   correct:1, exp:'El verbo es "caer": ellos cayeron. "Calleron" sería una forma inventada relacionada con "callar" que no existe en español.'},
+  {id:110, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Lo hizo a grosso modo.','Lo hizo grosso modo.','Lo hizo a groso modo.'],
+   correct:1, exp:'La locución latina "grosso modo" no lleva preposición "a" delante. Se escribe con doble -ss- y en cursiva.'},
+  // BLOQUE 2: Tildes
+  {id:111, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Biceps.','Bíceps.','Bicep.'],
+   correct:1, exp:'"Bíceps" lleva tilde porque es una palabra llana acabada en -ps (consonante + s), no en -s simple. Las llanas que no terminan en vocal, -n o -s simple llevan tilde.'},
+  {id:112, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Jóven.','Joven.','Jòven.'],
+   correct:1, exp:'"Joven" es llana terminada en -n, por eso no lleva tilde. (Las llanas en vocal, -n o -s no se acentúan.) Su plural es "jóvenes" (esdrújula → sí lleva tilde).'},
+  {id:113, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Exámen.','Examen.','Éxamen.'],
+   correct:1, exp:'"Examen" no lleva tilde: es palabra llana acabada en -n. Su plural "exámenes" sí lleva tilde al hacerse esdrújula.'},
+  {id:114, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Carácter.','Caracter.','Caractêr.'],
+   correct:0, exp:'"Carácter" es palabra llana acabada en -r (no en vocal, -n ni -s), por tanto lleva tilde. Curiosidad: su plural es "caracteres" (sin tilde, llana en -s).'},
+  {id:115, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Régimen.','Regimen.','Régímen.'],
+   correct:0, exp:'"Régimen" es esdrújula (sílaba tónica = Ré-) y todas las esdrújulas llevan tilde siempre.'},
+  {id:116, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Fácilmente.','Facilmente.','Fácílmente.'],
+   correct:0, exp:'Los adverbios en -mente conservan la tilde del adjetivo original. Como "fácil" lleva tilde, "fácilmente" también la conserva.'},
+  {id:117, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes opciones está correctamente acentuada?',
+   opts:['Solo sé que no sé nada.','Sólo sé que no se nada.','Solo se que no sé nada.'],
+   correct:0, exp:'"Sé" lleva tilde cuando es del verbo saber. "Se" sin tilde es pronombre. "Solo" (adjetivo/adverbio) nunca lleva tilde desde la norma RAE 2010.'},
+  {id:118, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está correctamente escrita?',
+   opts:['¿Que quieres hacer esta tarde?','¿Qué quieres hacer esta tarde?','¿Qué quieres hacer ésta tarde?'],
+   correct:1, exp:'"Qué" lleva tilde cuando introduce una pregunta directa o indirecta. Los demostrativos como "esta" no llevan tilde desde la norma RAE 2010.'},
+  {id:119, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está correctamente escrita?',
+   opts:['No sé quién ha llamado.','No se quien ha llamado.','No sé quien ha llamado.'],
+   correct:0, exp:'En interrogativas indirectas, "quién" lleva tilde. Además, "sé" del verbo saber también lleva tilde diacrítica para diferenciarse de "se" pronombre.'},
+  {id:120, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes palabras está correctamente escrita?',
+   opts:['Guión.','Guion.','Guiôn.'],
+   correct:1, exp:'"Guion" se considera monosílabo ortográfico (diptongo ui) y no lleva tilde. La RAE lo eliminó en la reforma de 2010.'},
+  // BLOQUE 3: Haber impersonal
+  {id:121, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Hubieron muchos opositores en el aula.','Hubo muchos opositores en el aula.','Hubieron muchos opositores esperando fuera.'],
+   correct:1, exp:'El verbo "haber" impersonal va siempre en singular: "hubo muchos opositores". Nunca "hubieron".'},
+  {id:122, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Habrán nuevas instrucciones antes del examen.','Habrá nuevas instrucciones antes del examen.','Habrían nuevas instrucciones antes del examen.'],
+   correct:1, exp:'Con valor impersonal, lo correcto es "habrá", no "habrán". El complemento plural no fuerza la concordancia.'},
+  {id:123, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Habían tres policías en la entrada.','Había tres policías en la entrada.','Habían tres policía en la entrada.'],
+   correct:1, exp:'Aunque el complemento esté en plural, el verbo "haber" impersonal permanece en singular: "había tres policías".'},
+  {id:124, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Puede haber cambios en la convocatoria.','Pueden haber cambios en la convocatoria.','Pueden haber cambio en la convocatoria.'],
+   correct:0, exp:'En perífrasis con "haber impersonal", el auxiliar también debe ir en singular: "puede haber cambios". No es "pueden haber".'},
+  // BLOQUE 4: Por qué / porque / porqué / por que
+  {id:125, cat:'ortografia', tag:'ortografia',
+   text:'Señale la opción correcta:',
+   opts:['No entiendo porque no ha venido.','No entiendo por qué no ha venido.','No entiendo porqué no ha venido.'],
+   correct:1, exp:'En una interrogativa indirecta se escribe "por qué": separado y con tilde en "qué".'},
+  {id:126, cat:'ortografia', tag:'ortografia',
+   text:'Señale la opción correcta:',
+   opts:['No vino porque estaba enfermo.','No vino por qué estaba enfermo.','No vino porqué estaba enfermo.'],
+   correct:0, exp:'Cuando introduce una causa (= ya que, puesto que), se escribe "porque": junto y sin tilde.'},
+  {id:127, cat:'ortografia', tag:'ortografia',
+   text:'Señale la opción correcta:',
+   opts:['Desconozco el por que de su decisión.','Desconozco el porqué de su decisión.','Desconozco el porque de su decisión.'],
+   correct:1, exp:'Cuando es sustantivo y equivale a "motivo", se escribe "porqué" (junto, con tilde). Es palabra aguda acabada en vocal.'},
+  {id:128, cat:'ortografia', tag:'ortografia',
+   text:'Señale la opción correcta:',
+   opts:['Esa es la razón por que luchamos.','Esa es la razón porque luchamos.','Esa es la razón por qué luchamos.'],
+   correct:0, exp:'"Por que" (separado, sin tilde): preposición + pronombre relativo. Puede sustituirse por "por la cual": "la razón por la cual luchamos".'},
+  // BLOQUE 5: Pronombres
+  {id:129, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['A Marta la dije que viniera.','A Marta le dije que viniera.','A Marta lo dije que viniera.'],
+   correct:1, exp:'Con el verbo "decir", la persona a quien se dice algo es complemento indirecto: "le dije". Usar "la dije" sería laísmo (incorrecto).'},
+  {id:130, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['A Marta la vi en la biblioteca.','A Marta le vi en la biblioteca.','A Marta lo vi en la biblioteca.'],
+   correct:0, exp:'Con el verbo "ver", Marta es complemento directo femenino: "la vi". Usar "le vi" para CD femenino sería leísmo inaceptable.'},
+  {id:131, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['Al detenido le esposaron.','Al detenido lo esposaron.','Al detenido la esposaron.'],
+   correct:1, exp:'"El detenido" es complemento directo masculino singular. El pronombre correcto de acusativo masculino es "lo". Usar "le" para CD masculino es leísmo (tolerado en España, pero "lo" es la norma prescriptiva).'},
+  {id:132, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['A los alumnos les entregaron los exámenes.','A los alumnos los entregaron los exámenes.','A los alumnos le entregaron los exámenes.'],
+   correct:0, exp:'Los alumnos son complemento indirecto (a ellos se les entrega algo). Lo correcto es "les entregaron". "Le" sería incorrecto en plural.'},
+  {id:133, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['A María la preocupa el resultado.','A María le preocupa el resultado.','A María lo preocupa el resultado.'],
+   correct:1, exp:'Con verbos como gustar, preocupar, interesar, la persona afectada es complemento indirecto: "le preocupa". Usar "la preocupa" sería laísmo.'},
+  // BLOQUE 6: Concordancia
+  {id:134, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases está correctamente escrita?',
+   opts:['La mayoría de los alumnos aprobaron el examen.','La mayoría de los alumnos aprobó el examen.','Las dos pueden ser correctas según el contexto.'],
+   correct:2, exp:'Con expresiones partitivas como "la mayoría de", puede concordarse en singular con el núcleo (aprobó) o en plural con el complemento (aprobaron). Ambas son válidas.'},
+  {id:135, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['El agua fría estaba sobre la mesa.','La agua fría estaba sobre la mesa.','El agua frío estaba sobre la mesa.'],
+   correct:0, exp:'Se usa "el agua" (artículo masculino) ante sustantivos femeninos que empiezan con a- tónica, pero el sustantivo sigue siendo femenino: el adjetivo va en femenino "fría".'},
+  {id:136, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['El arma reglamentaria fue encontrada.','La arma reglamentaria fue encontrada.','El arma reglamentario fue encontrado.'],
+   correct:0, exp:'"Arma" es femenino que empieza por a- tónica: se usa "el arma" pero con concordancia femenina en el adjetivo: "reglamentaria".'},
+  {id:137, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['Una aula pequeña.','Un aula pequeña.','Un aula pequeño.'],
+   correct:1, exp:'Se usa "un aula" (artículo masculino por comenzar con a- tónica), pero el adjetivo concuerda en femenino: "pequeña". El sustantivo sigue siendo femenino.'},
+  {id:138, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases está correctamente escrita?',
+   opts:['Se detuvieron a tres personas.','Se detuvo a tres personas.','Se detuvieron tres personas por la Policía.'],
+   correct:1, exp:'En una oración impersonal con "se" y complemento de persona introducido por "a", el verbo va en singular: "se detuvo a tres personas".'},
+  {id:139, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases está correctamente escrita?',
+   opts:['Se venden pisos.','Se vende pisos.','Se venden piso.'],
+   correct:0, exp:'Es una construcción de pasiva refleja. El sujeto es "pisos", por eso el verbo concuerda en plural: "se venden pisos".'},
+  // BLOQUE 7: Dequeísmo y queísmo
+  {id:140, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['Pienso de que aprobará.','Pienso que aprobará.','Pienso en que aprobará.'],
+   correct:1, exp:'El verbo "pensar" con ese sentido no lleva preposición: "pienso que". Añadir "de" ("pienso de que") es dequeísmo, un error muy frecuente.'},
+  {id:141, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['Me alegro que hayas venido.','Me alegro de que hayas venido.','Me alegro de hayas venido.'],
+   correct:1, exp:'"Alegrarse de algo" exige la preposición "de": "me alegro de que". Omitirla ("me alegro que") es queísmo.'},
+  {id:142, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['Estoy seguro que vendrá.','Estoy seguro de que vendrá.','Estoy seguro a que vendrá.'],
+   correct:1, exp:'"Estar seguro de que" exige la preposición "de". Omitirla es queísmo: "estoy seguro que" es incorrecto.'},
+  {id:143, cat:'gramatica', tag:'gramatica',
+   text:'¿Cuál de las siguientes frases es correcta?',
+   opts:['Confío de que todo saldrá bien.','Confío en que todo saldrá bien.','Confío que todo saldrá bien.'],
+   correct:1, exp:'El verbo "confiar" rige la preposición "en": "confío en que". Usar "de" o suprimir la preposición son errores.'},
+  // BLOQUE 8: Parónimos
+  {id:144, cat:'ortografia', tag:'ortografia',
+   text:'Indique la opción correcta:',
+   opts:['El policía reveló el secreto profesional.','El policía rebeló el secreto profesional.','El policía rebelo el secreto profesional.'],
+   correct:0, exp:'"Revelar" = descubrir o manifestar algo oculto. "Rebelar" = sublevarse, oponerse. Son parónimos con significado muy diferente.'},
+  {id:145, cat:'ortografia', tag:'ortografia',
+   text:'Indique la opción correcta:',
+   opts:['El detenido tuvo una actitud hostil.','El detenido tuvo una actitud ostil.','El detenido tuvo una actitud hostíl.'],
+   correct:0, exp:'"Hostil" se escribe con h, sin tilde (es llana terminada en -l, que no lleva tilde) y con -s-.'},
+  {id:146, cat:'ortografia', tag:'ortografia',
+   text:'Indique la opción correcta:',
+   opts:['El acusado mostró una aptitud desafiante.','El acusado mostró una actitud desafiante.','El acusado mostró una actituz desafiante.'],
+   correct:1, exp:'"Actitud" = comportamiento, manera de actuar. "Aptitud" = capacidad o habilidad para algo. Son parónimos frecuentes en exámenes.'},
+  {id:147, cat:'ortografia', tag:'ortografia',
+   text:'Indique la opción correcta:',
+   opts:['El testigo prestó declaración ante el juez.','El testigo prestró declaración ante el juez.','El testigo presto declaración ante el juez.'],
+   correct:0, exp:'"Prestó" es la 3ª persona singular del pretérito perfecto simple de "prestar". Lleva tilde por ser aguda terminada en vocal.'},
+  {id:148, cat:'ortografia', tag:'ortografia',
+   text:'Indique la opción correcta:',
+   opts:['El informe contiene una basta explicación.','El informe contiene una vasta explicación.','El informe contiene una vásta explicación.'],
+   correct:1, exp:'"Vasta" = amplia, extensa. "Basta" = ordinaria, tosca o suficiente. Son homófonas que se diferencian por b/v.'},
+  {id:149, cat:'ortografia', tag:'ortografia',
+   text:'Indique la opción correcta:',
+   opts:['El agente actuó con discreción.','El agente actuó con discrección.','El agente actuó con discripción.'],
+   correct:0, exp:'"Discreción" se escribe con una sola -c- antes de la terminación -ión. "Discrección" no existe.'},
+  {id:150, cat:'ortografia', tag:'ortografia',
+   text:'Indique la opción correcta:',
+   opts:['La infracción fue leve.','La infracción fue lebe.','La infración fue leve.'],
+   correct:0, exp:'"Infracción" lleva doble -cc-. "Leve" se escribe con -v-. Las dos palabras de la opción A son correctas.'},
+  // BLOQUE 9: Mayúsculas
+  {id:151, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El Rey sancionó la ley.','El rey sancionó la ley.','El rey sancionó la Ley.'],
+   correct:1, exp:'Los cargos (rey, presidente, ministro, papa) se escriben con minúscula. Solo se usan mayúsculas en usos institucionales o protocolarios muy específicos.'},
+  {id:152, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['La Constitución Española fue aprobada en 1978.','La constitución española fue aprobada en 1978.','La Constitución española fue aprobada en 1978.'],
+   correct:0, exp:'Cuando se cita el nombre oficial completo de la norma, se escribe "Constitución Española" con mayúsculas iniciales en todos sus elementos significativos.'},
+  {id:153, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El código penal regula los delitos y las penas.','El Código Penal regula los delitos y las penas.','El Código penal regula los Delitos y las Penas.'],
+   correct:1, exp:'Los nombres oficiales de leyes o códigos se escriben con mayúscula inicial en sus elementos significativos: "Código Penal".'},
+  {id:154, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El artículo 14 de la Constitución reconoce la igualdad.','El Artículo 14 de la Constitución reconoce la igualdad.','El artículo 14 de la constitución reconoce la igualdad.'],
+   correct:0, exp:'"Artículo" se escribe con minúscula cuando no forma parte de un título. "Constitución", en referencia a la española, lleva mayúscula.'},
+  // BLOQUE 10: Puntuación
+  {id:155, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está correctamente puntuada?',
+   opts:['Juan, el testigo principal declaró ante el juez.','Juan el testigo principal, declaró ante el juez.','Juan, el testigo principal, declaró ante el juez.'],
+   correct:2, exp:'La aposición explicativa "el testigo principal" debe ir entre comas, una delante y otra detrás.'},
+  {id:156, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está correctamente puntuada?',
+   opts:['No obstante, el recurso fue admitido.','No obstante el recurso, fue admitido.','No, obstante el recurso fue admitido.'],
+   correct:0, exp:'Los conectores discursivos como "no obstante", "sin embargo", "por tanto" se separan con coma cuando encabezan la oración.'},
+  {id:157, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está correctamente puntuada?',
+   opts:['Si estudias, aprobarás.','Si estudias aprobarás.','Si, estudias aprobarás.'],
+   correct:0, exp:'Cuando una subordinada condicional aparece al inicio de la oración, suele separarse con coma del resto: "Si estudias, aprobarás".'},
+  {id:158, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está correctamente puntuada?',
+   opts:['El acusado afirmó: "No estuve allí".','El acusado afirmó "No estuve allí".','El acusado afirmó, "No estuve allí".'],
+   correct:0, exp:'Antes de una cita textual introducida por un verbo de lengua (afirmar, decir, responder), se usan dos puntos.'},
+  // BLOQUE 11: Tiempos verbales
+  {id:159, cat:'gramatica', tag:'gramatica',
+   text:'Señale el pretérito pluscuamperfecto de subjuntivo del verbo "detener":',
+   opts:['Haya detenido.','Hubiera o hubiese detenido.','Hubiere detenido.'],
+   correct:1, exp:'El pretérito pluscuamperfecto de subjuntivo = hubiera/hubiese + participio. "Haya detenido" = perfecto. "Hubiere detenido" = futuro perfecto de subjuntivo.'},
+  {id:160, cat:'gramatica', tag:'gramatica',
+   text:'Señale el pretérito perfecto de subjuntivo del verbo "resolver":',
+   opts:['Haya resuelto.','Hubiera resuelto.','Hubiere resuelto.'],
+   correct:0, exp:'El pretérito perfecto de subjuntivo = haya + participio. "Haya resuelto" es la forma correcta.'},
+  {id:161, cat:'gramatica', tag:'gramatica',
+   text:'Señale la forma verbal correcta:',
+   opts:['Si lo sabría, te lo diría.','Si lo supiera, te lo diría.','Si lo sabré, te lo diría.'],
+   correct:1, exp:'En las oraciones condicionales irreales de presente, la prótasis (si + ...) usa imperfecto de subjuntivo: "si lo supiera". Nunca condicional ni futuro en la prótasis.'},
+  {id:162, cat:'gramatica', tag:'gramatica',
+   text:'Señale la forma verbal correcta:',
+   opts:['Ayer conducí durante tres horas.','Ayer conduje durante tres horas.','Ayer conducía durante tres horas.'],
+   correct:1, exp:'El pretérito perfecto simple (indefinido) de "conducir" es "conduje", no "conducí". Verbo irregular.'},
+  {id:163, cat:'gramatica', tag:'gramatica',
+   text:'Señale la forma verbal correcta:',
+   opts:['Andé varios kilómetros.','Anduve varios kilómetros.','Andaba varios kilómetros ayer.'],
+   correct:1, exp:'El pretérito perfecto simple de "andar" es "anduve", no "andé" (que sería una regularización incorrecta). Verbo irregular.'},
+  {id:164, cat:'gramatica', tag:'gramatica',
+   text:'Señale la forma verbal correcta:',
+   opts:['Preveyó las consecuencias.','Previo las consecuencias.','Previó las consecuencias.'],
+   correct:2, exp:'El verbo correcto es "prever" (no "preveer"). Su 3ª persona singular del pretérito es "previó". "Preveyó" es incorrecta por analogía equivocada con "proveer".'},
+  // BLOQUE 12: Numerales
+  {id:165, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Llegó en onceava posición.','Llegó en undécima posición.','Llegó en la posición onceava parte.'],
+   correct:1, exp:'Para indicar orden se usa "undécima". "Onceava" es un numeral partitivo (= una onceava parte), no ordinal. Confundirlos es un error frecuente en el examen.'},
+  {id:166, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['El doceavo artículo regula la materia.','El duodécimo artículo regula la materia.','El artículo doceavo regula la materia cuando ocupa el lugar doce.'],
+   correct:1, exp:'Para indicar orden se usa "duodécimo". "Doceavo" expresa fracción (= una doceava parte), no posición.'},
+  {id:167, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes frases está escrita correctamente?',
+   opts:['Vive en el vigésimo primer piso.','Vive en el veinteavo primer piso.','Vive en el vigésimo primero piso.'],
+   correct:0, exp:'Ante sustantivo masculino singular, lo correcto es "vigésimo primer piso" (apócope de "primero"). "Vigésimo primero piso" sin apocopar es incorrecto.'},
+  // BLOQUE 13: Locuciones latinas
+  {id:168, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['A priori, la medida parece adecuada.','A prióri, la medida parece adecuada.','Apriori, la medida parece adecuada.'],
+   correct:0, exp:'La locución latina "a priori" se escribe separada y sin tilde. Se escribe en cursiva en textos tipográficos.'},
+  {id:169, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['El informe se elaboró ex profeso.','El informe se elaboró expresamente exprofeso.','El informe se elaboró exprofesso.'],
+   correct:0, exp:'"Ex profeso" = expresamente, con intención deliberada. Se escribe en dos palabras y sin doble -ss-.'},
+  {id:170, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['La norma se aplicará ipso facto.','La norma se aplicará de ipso facto.','La norma se aplicará ipsofacto.'],
+   correct:0, exp:'"Ipso facto" = inmediatamente, en el acto. Se escribe en dos palabras separadas y sin preposición.'},
+  {id:171, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['El error fue subsanado in extremis.','El error fue subsanado en extremis.','El error fue subsanado inextremis.'],
+   correct:0, exp:'"In extremis" = en el último momento, en situación extrema. Se escribe en dos palabras con el prefijo latino "in", no la preposición española "en".'},
+  {id:172, cat:'ortografia', tag:'ortografia',
+   text:'¿Cuál de las siguientes opciones es correcta?',
+   opts:['La decisión fue tomada ad hoc.','La decisión fue tomada adhoc.','La decisión fue tomada a doc.'],
+   correct:0, exp:'"Ad hoc" = específicamente para ese fin. Se escribe en dos palabras separadas, en cursiva, sin tilde.'},
+  // BLOQUE 14: Palabras dudosas
+  {id:173, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Idiosincrasia.','Idiosincracia.','Ideosincrasia.'],
+   correct:0, exp:'"Idiosincrasia": del griego "idios" (propio) + "synkrasia" (mezcla). Terminación -asia, no -acia. La segunda vocal es -io-, no -eo-.'},
+  {id:174, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Beneficiencia.','Beneficencia.','Veneficencia.'],
+   correct:1, exp:'"Beneficencia": de "bene" + "facere". No tiene -i- intercalada (-ficencia, no -ficiencia). "Veneficencia" sería error de b/v además.'},
+  {id:175, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Vicisitud.','Visicitud.','Vicicitud.'],
+   correct:0, exp:'"Vicisitud" = cambio o alternancia de situaciones. El orden correcto es vi-ci-si-tud. No es "visicitud" ni otras transposiciones.'},
+  {id:176, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Exhuberante.','Exuberante.','Esuberante.'],
+   correct:1, exp:'"Exuberante": abundante, lozano. Se escribe con -x- seguida directamente de -u-, sin -h- intercalada. "Exhuberante" es incorrecto.'},
+  {id:177, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Cónyuge.','Cónyugue.','Conyugue.'],
+   correct:0, exp:'"Cónyuge" se escribe con -g- y sin -u- intercalada: cón-yu-ge. Se pronuncia [kónyuxe], con sonido de j. No lleva -gu-.'},
+  {id:178, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Preveer.','Prever.','Preveerá.'],
+   correct:1, exp:'El verbo correcto es "prever", no "preveer". Es un compuesto de "ver": pre+ver. Conjugado: preveo, prevés, prevé...'},
+  {id:179, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Absorber.','Absorver.','Asorber.'],
+   correct:0, exp:'"Absorber" = incorporar, asimilar. Se escribe con -b- (grupo -bs-). "Absorver" es incorrecto; no existe esa forma.'},
+  {id:180, cat:'ortografia', tag:'ortografia',
+   text:'Indique la palabra correctamente escrita:',
+   opts:['Atravéz.','A través.','Atraves.'],
+   correct:1, exp:'"A través" se escribe en dos palabras y con tilde en "través" (es aguda terminada en -s). "Atravéz" sería error ortográfico de grafía.'},
+];
+
+// ===== TEST LOGIC =====
+let currentMode = 'simulacro';
+let currentFilter = 'all';
+let currentQuestions = [];
+let currentIndex = 0;
+let correctAnswers = 0;
+let selectedAnswer = -1;
+let timer = null;
+let timeLeft = 0;
+let answered = false;
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateStats();
+}
+
+function updateStats() {
+  const filtered = getFilteredQuestions();
+  document.getElementById('stat-total').textContent = QUESTIONS.length;
+  document.getElementById('stat-oficial').textContent = QUESTIONS.filter(q => q.tag === 'oficial').length;
+  document.getElementById('stat-ortografia').textContent = QUESTIONS.filter(q => q.cat === 'ortografia').length;
+  document.getElementById('stat-gramatica').textContent = QUESTIONS.filter(q => q.cat === 'gramatica').length;
+}
+
+function getFilteredQuestions() {
+  if (currentFilter === 'all') return [...QUESTIONS];
+  if (currentFilter === 'oficial') return QUESTIONS.filter(q => q.tag === 'oficial');
+  return QUESTIONS.filter(q => q.cat === currentFilter);
+}
+
+function selectMode(mode, card) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startTest() {
+  let pool = getFilteredQuestions();
+  if (pool.length === 0) { alert('No hay preguntas para este filtro.'); return; }
+  
+  currentQuestions = shuffle(pool);
+  if (currentMode === 'simulacro') currentQuestions = currentQuestions.slice(0, 5);
+  
+  currentIndex = 0;
+  correctAnswers = 0;
+
+  document.getElementById('test-setup').style.display = 'none';
+  document.getElementById('result-screen').classList.remove('visible');
+  document.getElementById('question-area').classList.add('visible');
+  document.getElementById('mode-badge').textContent = currentMode === 'simulacro' ? '⏱ Simulacro' : '📚 Estudio';
+  
+  if (currentMode === 'simulacro') {
+    document.getElementById('timer-display').style.display = 'flex';
+  } else {
+    document.getElementById('timer-display').style.display = 'none';
+  }
+  
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = currentQuestions[currentIndex];
+  const total = currentQuestions.length;
+  answered = false;
+  selectedAnswer = -1;
+
+  document.getElementById('q-counter').textContent = `${currentIndex + 1} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(currentIndex / total) * 100}%`;
+  
+  // Tags
+  const tagsEl = document.getElementById('q-tags');
+  let tagsHTML = '';
+  if (q.cat === 'ortografia') tagsHTML += '<span class="question-tag tag-ortografia">Ortografía</span> ';
+  if (q.cat === 'gramatica') tagsHTML += '<span class="question-tag tag-gramatica">Gramática</span> ';
+  if (q.tag === 'oficial') tagsHTML += `<span class="question-tag tag-oficial">⭐ Oficial · ${q.promo}</span>`;
+  tagsEl.innerHTML = tagsHTML;
+  
+  document.getElementById('q-text').textContent = q.text;
+  
+  const optsEl = document.getElementById('q-options');
+  optsEl.innerHTML = '';
+  const letters = ['a', 'b', 'c'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.onclick = () => selectOption(i);
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    optsEl.appendChild(btn);
+  });
+  
+  document.getElementById('q-explanation').classList.remove('visible');
+  document.getElementById('btn-next').style.display = 'none';
+
+  if (currentMode === 'simulacro') startTimer();
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = 120;
+  const el = document.getElementById('timer-display');
+  el.classList.remove('urgent');
+  updateTimerDisplay();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 15) el.classList.add('urgent');
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      if (!answered) autoAnswer();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  document.getElementById('timer-display').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+function autoAnswer() {
+  answered = true;
+  revealAnswer(-1);
+}
+
+function selectOption(index) {
+  if (answered) return;
+  answered = true;
+  selectedAnswer = index;
+  clearInterval(timer);
+  
+  const q = currentQuestions[currentIndex];
+  if (index === q.correct) correctAnswers++;
+  
+  revealAnswer(index);
+}
+
+function revealAnswer(selected) {
+  const q = currentQuestions[currentIndex];
+  const opts = document.querySelectorAll('.option');
+  
+  opts.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.correct) opt.classList.add('correct');
+    else if (i === selected && selected !== -1 && i !== q.correct) opt.classList.add('wrong');
+  });
+  
+  // Always show explanation with context-aware message
+  const expEl = document.getElementById('q-explanation');
+  const isCorrect = selected === q.correct;
+  const icon = isCorrect ? '✅' : (selected === -1 ? '⏱' : '❌');
+  const header = isCorrect ? '<span style="color:var(--green);font-weight:700;">¡Correcto!</span>' 
+                           : (selected === -1 ? '<span style="color:var(--red);font-weight:700;">Tiempo agotado</span>'
+                                              : '<span style="color:var(--red);font-weight:700;">Incorrecto</span>');
+  expEl.innerHTML = `${icon} ${header} — <strong>💡 Explicación:</strong> ${q.exp}`;
+  expEl.classList.add('visible');
+  
+  document.getElementById('btn-next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= currentQuestions.length) {
+    showResult();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResult() {
+  clearInterval(timer);
+  document.getElementById('question-area').classList.remove('visible');
+  
+  const total = currentQuestions.length;
+  const score = correctAnswers;
+  const pct = Math.round((score / total) * 100);
+  
+  document.getElementById('result-correct-num').textContent = score;
+  document.getElementById('result-total-num').textContent = total;
+  document.getElementById('bd-correct').textContent = score;
+  document.getElementById('bd-wrong').textContent = total - score;
+  
+  document.getElementById('result-score-el').style.color = 
+    pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--gold)' : 'var(--red)';
+  
+  let label, desc;
+  if (pct === 100) { label = '¡Perfecto! 🏆'; desc = 'Dominas completamente el tema. Sigue así de cara al examen.'; }
+  else if (pct >= 80) { label = '¡Muy bien! ✨'; desc = 'Excelente resultado. Repasa los fallos y ya estarás listo.'; }
+  else if (pct >= 60) { label = 'Bien, pero hay margen'; desc = 'Buen rendimiento. Refuerza los puntos débiles antes del examen.'; }
+  else if (pct >= 40) { label = 'Necesitas repasar'; desc = 'Revisa la teoría de los temas en que has fallado.'; }
+  else { label = 'A estudiar más 📖'; desc = 'Repasa los temas de Gramática y Ortografía antes de volver al test.'; }
+  
+  document.getElementById('result-label').textContent = label;
+  document.getElementById('result-desc').textContent = desc;
+  document.getElementById('result-screen').classList.add('visible');
+}
+
+function stopTest() {
+  clearInterval(timer);
+  document.getElementById('question-area').classList.remove('visible');
+  document.getElementById('test-setup').style.display = 'block';
+}
+
+function resetTest() {
+  clearInterval(timer);
+  document.getElementById('result-screen').classList.remove('visible');
+  document.getElementById('question-area').classList.remove('visible');
+  document.getElementById('test-setup').style.display = 'block';
+  updateStats();
+}
+
+// Init
+updateStats();
+
+// ===== PASSWORD =====
+const PASSWORDS = ['lopepol2026'];
+
+function checkPassword() {
+  const input = document.getElementById('pwd-input');
+  const errorEl = document.getElementById('login-error');
+  const val = input.value.trim().toLowerCase();
+
+  if (PASSWORDS.includes(val)) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-content').style.display = 'block';
+    input.value = '';
+    errorEl.textContent = '';
+  } else {
+    errorEl.textContent = 'Contraseña incorrecta. Inténtalo de nuevo.';
+    input.classList.add('error');
+    input.value = '';
+    setTimeout(() => input.classList.remove('error'), 400);
+    input.focus();
+  }
+}
+
+// Auto-focus password input
+window.addEventListener('load', () => {
+  document.getElementById('pwd-input').focus();
+});
+</script>
+</div><!-- /app-content -->
+</body>
+</html>
